@@ -620,9 +620,9 @@ footer{background:#060F1A;color:rgba(255,255,255,.4);padding:2.5rem 1.5rem;text-
       <span class="logo-name">Fin<span>Wise</span> AI</span>
     </div>
     <div class="nav-links">
-      <a onclick="scrollTo('#who')">Who it's for</a>
-      <a onclick="scrollTo('#features')">Features</a>
-      <a onclick="scrollTo('#pricing')">Pricing</a>
+      <a onclick="goTo('#who')">Who it's for</a>
+      <a onclick="goTo('#features')">Features</a>
+      <a onclick="goTo('#pricing')">Pricing</a>
     </div>
     <div class="nav-r">
       <button class="btn-ghost" onclick="showAuth('login')">Log in</button>
@@ -636,7 +636,7 @@ footer{background:#060F1A;color:rgba(255,255,255,.4);padding:2.5rem 1.5rem;text-
     <p class="hero-sub">FinWise AI helps businesses, organisations, and households cut costs, grow profits, manage cash flow, and eliminate financial risk — all in one simple conversation.</p>
     <div class="hero-btns">
       <button class="btn-primary" onclick="showAuth('register')">Start free — no credit card →</button>
-      <button class="btn-outline-w" onclick="scrollTo('#features')">See what it does</button>
+      <button class="btn-outline-w" onclick="goTo('#features')">See what it does</button>
     </div>
     <div class="hero-stats">
       <div><div class="stat-num"><span>₹</span>2.4M+</div><div class="stat-lbl">Savings identified</div></div>
@@ -779,7 +779,7 @@ footer{background:#060F1A;color:rgba(255,255,255,.4);padding:2.5rem 1.5rem;text-
     <p>Join 4,200+ businesses, organisations, and households already using FinWise AI.</p>
     <div class="cta-btns">
       <button class="btn-primary" onclick="showAuth('register')">Try for free — no credit card →</button>
-      <button class="btn-outline-w" onclick="scrollTo('#pricing')">See all plans</button>
+      <button class="btn-outline-w" onclick="goTo('#pricing')">See all plans</button>
     </div>
   </div></div>
 
@@ -1041,7 +1041,7 @@ function showView(v) {
   document.getElementById(v+'-view').classList.add('active');
   window.scrollTo(0,0);
 }
-function scrollTo(s) { if(typeof s === 'string') document.querySelector(s)?.scrollIntoView({behavior:'smooth'}); else window.scrollTo(0,s||0); }
+function goTo(s) { if(typeof s === 'string') document.querySelector(s)?.scrollIntoView({behavior:'smooth'}); }
 function switchTab(b, id) {
   document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('on'));
   document.querySelectorAll('.tab-pnl').forEach(x=>x.classList.remove('on'));
