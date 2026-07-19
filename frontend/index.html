@@ -1519,8 +1519,16 @@ async function installPWA(){
 // ── auto-login on page load ────────────────────────────────────
 (async()=>{
   if(!token) return;
-  try { const{data}=await req('/auth/me'); ME=data; enterApp(); }
-  catch(e){ console.warn('Session check failed:', e.message); showView('landing'); }
+  let retries = 3;
+  while(retries > 0) {
+    try { const{data}=await req('/auth/me'); ME=data; enterApp(); return; }
+    catch(e){ 
+      retries--;
+      console.warn('Session check failed, retries left:', retries, e.message);
+      if(retries === 0) { showView('landing'); }
+      else { await new Promise(r=>setTimeout(r,3000)); }
+    }
+  }
 })();
 </script>
 </body>
