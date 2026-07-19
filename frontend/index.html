@@ -1019,7 +1019,7 @@ function toast(msg, type='ok') {
 async function req(path, opts={}) {
   const h = {'Content-Type':'application/json'};
   if (token) h['Authorization'] = 'Bearer ' + token;
-  const r = await fetch(API+path, {...opts, headers:h});
+  const controller = new AbortController(); const timeout = setTimeout(()=>controller.abort(),15000); const r = await fetch(API+path, {...opts, headers:h, signal:controller.signal}); clearTimeout(timeout);
   const j = await r.json();
   if (!r.ok) {
     // If unauthorized, clear token and redirect to login
@@ -1520,7 +1520,7 @@ async function installPWA(){
 (async()=>{
   if(!token) return;
   try { const{data}=await req('/auth/me'); ME=data; enterApp(); }
-  catch(e){ localStorage.removeItem('fw_token'); token=null; }
+  catch(e){ console.warn('Session check failed:', e.message); showView('landing'); }
 })();
 </script>
 </body>
