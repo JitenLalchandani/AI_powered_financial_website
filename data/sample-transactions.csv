@@ -1,0 +1,17 @@
+date,description,amount,type,category
+2024-01-15,Office Rent Payment,50000,expense,rent
+2024-01-16,Client Project Payment,100000,income,sales
+2024-01-17,Software Subscription - Adobe,5000,expense,software
+2024-01-18,Electricity Bill,3500,expense,utilities
+2024-01-19,Freelance Income,25000,income,freelance
+2024-01-20,Marketing Campaign,15000,expense,marketing
+2024-01-21,Office Supplies,2500,expense,supplies
+2024-01-22,Consulting Service,75000,income,service
+2024-01-23,Internet Bill,1500,expense,utilities
+2024-01-24,Employee Salaries,80000,expense,salaries
+2024-01-25,Product Sales,45000,income,sales
+2024-01-26,Transportation,2000,expense,transport
+2024-01-27,Client Retainer,60000,income,service
+2024-01-28,Insurance Premium,8000,expense,insurance
+2024-01-29,Equipment Maintenance,4500,expense,maintenance
+2024-01-30,Investment Returns,12000,income,investment

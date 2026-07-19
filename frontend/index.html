@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Primary Meta Tags -->
+<title>FinWise AI — Smart Financial Advisor for India | Budget, Save & Invest</title>
+<meta name="title" content="FinWise AI — Smart Financial Advisor for India | Budget, Save & Invest">
+<meta name="description" content="Free AI-powered financial advisor for India. Track expenses, create budgets, get personalized savings advice, investment tips, and tax planning. Smart money management made easy.">
+<meta name="keywords" content="financial advisor India, budget app, expense tracker, savings calculator, investment advice, tax planning, money management, personal finance, AI financial advisor, FinWise">
+<meta name="author" content="FinWise AI">
+<meta name="robots" content="index, follow">
+<meta name="language" content="English">
+<meta name="revisit-after" content="7 days">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://finwise-ai.com/">
+<meta property="og:title" content="FinWise AI — Smart Financial Advisor for India">
+<meta property="og:description" content="Free AI-powered financial advisor. Track expenses, create budgets, get personalized savings advice and investment tips for India.">
+<meta property="og:image" content="https://finwise-ai.com/og-image.jpg">
+<meta property="og:site_name" content="FinWise AI">
+<meta property="og:locale" content="en_IN">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://finwise-ai.com/">
+<meta property="twitter:title" content="FinWise AI — Smart Financial Advisor for India">
+<meta property="twitter:description" content="Free AI-powered financial advisor. Track expenses, create budgets, get personalized savings advice and investment tips.">
+<meta property="twitter:image" content="https://finwise-ai.com/twitter-image.jpg">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#00C49A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FinWise AI">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="https://finwise-ai.com/">
+
+<!-- Preconnect for Performance -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+<!-- Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "FinWise AI",
+  "description": "AI-powered financial advisor for India. Track expenses, create budgets, get personalized savings and investment advice.",
+  "url": "https://finwise-ai.com",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "1250"
+  },
+  "featureList": [
+    "AI Financial Advisor",
+    "Expense Tracking",
+    "Budget Planning",
+    "Investment Advice",
+    "Tax Planning",
+    "Savings Calculator",
+    "Cash Flow Forecasting"
+  ]
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --navy:#0B1F3A;--navy2:#142D52;--teal:#00C49A;--teal2:#00A882;
+  --teal-bg:rgba(0,196,154,.11);--gold:#F5A623;--gold-bg:rgba(245,166,35,.11);
+  --red:#FF5C5C;--red-bg:rgba(255,92,92,.09);--green:#22C55E;--green-bg:rgba(34,197,94,.09);
+  --cream:#F5F4F0;--white:#fff;
+  --t-dark:#0B1F3A;--t-mid:#375070;--t-soft:#6E8AA8;--t-muted:#9BB5CC;
+  --bdr:rgba(11,31,58,.09);--bdr2:rgba(11,31,58,.16);
+  --sh:0 4px 22px rgba(11,31,58,.08);--sh2:0 14px 50px rgba(11,31,58,.15);
+  --r:12px;--rl:20px;--rxl:28px;--sb:260px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--cream);color:var(--t-dark);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.view{display:none}.view.active{display:block}
+#auth-view.active,#app-view.active{display:flex}
+
+/* ══ RESPONSIVE BASE ══ */
+@media(max-width:768px){
+  body{font-size:14px}
+  .con{padding:0 1rem}
+}
+
+/* ══ NAV ══ */
+.main-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(11,31,58,.97);backdrop-filter:blur(12px);height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none}
+.logo-mark{width:34px;height:34px;background:var(--teal);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;color:var(--navy)}
+.logo-name{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px}
+.logo-name span{color:var(--teal)}
+.nav-links{display:flex;gap:1.75rem}
+.nav-links a{color:rgba(255,255,255,.68);font-size:14px;font-weight:500;cursor:pointer;transition:color .2s;text-decoration:none}
+.nav-links a:hover{color:#fff}
+.nav-r{display:flex;gap:.75rem;align-items:center}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);padding:8px 18px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,.5);color:#fff}
+.btn-teal{background:var(--teal);color:var(--navy);padding:9px 20px;border-radius:9px;font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .2s}
+.btn-teal:hover{background:#00e5b4;transform:translateY(-1px)}
+
+/* Mobile Navigation */
+@media(max-width:768px){
+  .main-nav{padding:0 1rem;height:56px}
+  .logo-mark{width:30px;height:30px;font-size:15px}
+  .logo-name{font-size:15px}
+  .nav-links{display:none}
+  .nav-r{gap:.5rem}
+  .btn-ghost,.btn-teal{padding:7px 14px;font-size:12px}
+}
+
+/* ══ HERO ══ */
+.hero{min-height:100vh;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:110px 1.5rem 90px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 900px 550px at 50% 42%,rgba(0,196,154,.14) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,196,154,.12);border:1px solid rgba(0,196,154,.3);color:var(--teal);padding:6px 16px;border-radius:100px;font-size:12px;font-weight:600;margin-bottom:2rem;letter-spacing:.3px}
+.dot-pulse{width:7px;height:7px;background:var(--teal);border-radius:50%;animation:dp 2s ease-in-out infinite}
+@keyframes dp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.75)}}
+.hero h1{font-size:clamp(2.5rem,5.5vw,4.9rem);font-weight:900;color:#fff;line-height:1.07;letter-spacing:-2px;max-width:880px;margin-bottom:1.5rem;position:relative}
+.hero h1 em{color:var(--teal);font-style:normal}
+.hero-sub{font-size:clamp(1rem,1.8vw,1.2rem);color:rgba(255,255,255,.6);max-width:600px;margin:0 auto 3rem;line-height:1.75;position:relative}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;position:relative}
+.btn-primary{background:var(--teal);color:var(--navy);padding:15px 36px;border-radius:var(--r);font-size:15px;font-weight:800;border:none;cursor:pointer;transition:all .22s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:#00e5b4;transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,196,154,.4)}
+.btn-outline-w{background:transparent;color:rgba(255,255,255,.88);padding:15px 36px;border-radius:var(--r);font-size:15px;font-weight:600;border:1.5px solid rgba(255,255,255,.22);cursor:pointer;transition:all .2s}
+.btn-outline-w:hover{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.04)}
+.hero-stats{display:flex;gap:3rem;margin-top:4.5rem;flex-wrap:wrap;justify-content:center;position:relative}
+.stat-num{font-size:2.1rem;font-weight:900;color:#fff}
+.stat-num span{color:var(--teal)}
+.stat-lbl{font-size:12px;color:rgba(255,255,255,.42);margin-top:4px}
+
+/* Mobile Hero */
+@media(max-width:768px){
+  .hero{padding:80px 1rem 60px;min-height:90vh}
+  .hero-badge{font-size:11px;padding:5px 12px}
+  .hero h1{letter-spacing:-1px}
+  .hero-btns{flex-direction:column;width:100%;max-width:300px}
+  .btn-primary,.btn-outline-w{width:100%;justify-content:center;padding:13px 24px}
+  .hero-stats{gap:2rem;margin-top:3rem}
+  .stat-num{font-size:1.6rem}
+}
+
+/* ══ SECTIONS ══ */
+.sec{padding:90px 1.5rem}
+.con{max-width:1140px;margin:0 auto}
+.sec-lbl{font-size:12px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--teal);margin-bottom:.75rem}
+.sec-h{font-size:clamp(1.7rem,3.5vw,2.65rem);font-weight:900;letter-spacing:-1px;line-height:1.15;margin-bottom:.9rem}
+.sec-p{font-size:1rem;color:var(--t-soft);max-width:530px;line-height:1.75}
+.sec-hdr{margin-bottom:3.5rem}
+.sec-hdr.cen{text-align:center}.sec-hdr.cen .sec-p{margin:0 auto}
+
+@media(max-width:768px){
+  .sec{padding:60px 1rem}
+  .sec-hdr{margin-bottom:2.5rem}
+  .sec-p{font-size:14px}
+}
+
+/* ══ WHO TABS ══ */
+.who-sec{background:#fff}
+.tab-row{display:flex;gap:5px;background:var(--cream);border-radius:var(--r);padding:5px;margin-bottom:2.5rem;overflow-x:auto}
+.tab-btn{padding:9px 22px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--t-soft);transition:all .2s;white-space:nowrap;flex-shrink:0}
+.tab-btn.on{background:var(--navy);color:#fff;box-shadow:0 2px 10px rgba(11,31,58,.2)}
+.tab-btn:hover:not(.on){background:rgba(11,31,58,.05);color:var(--t-dark)}
+.tab-pnl{display:none}
+.tab-pnl.on{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+@media(max-width:720px){.tab-pnl.on{grid-template-columns:1fr}}
+.pl h3{font-size:1.5rem;font-weight:900;margin-bottom:.7rem;letter-spacing:-.4px}
+.pl p{color:var(--t-soft);line-height:1.72;margin-bottom:1.8rem}
+.who-feats{display:flex;flex-direction:column;gap:.85rem}
+.wf{display:flex;align-items:flex-start;gap:11px;padding:.875rem 1.1rem;background:var(--cream);border-radius:10px;border:1px solid var(--bdr)}
+.wf-ic{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.wf-ic.t{background:var(--teal-bg)}.wf-ic.g{background:var(--gold-bg)}.wf-ic.n{background:rgba(11,31,58,.07)}
+.wf-tx h4{font-size:13px;font-weight:700;margin-bottom:2px}
+.wf-tx p{font-size:12px;color:var(--t-soft);line-height:1.5}
+.mc{background:var(--navy);color:#fff;border-radius:var(--r);padding:1.4rem 1.6rem;margin-bottom:.875rem;position:relative;overflow:hidden}
+.mc:last-child{margin-bottom:0}
+.mc::after{content:'';position:absolute;right:-18px;top:-18px;width:90px;height:90px;border-radius:50%;background:rgba(0,196,154,.08)}
+.mc-lbl{font-size:11px;color:rgba(255,255,255,.42);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:7px}
+.mc-val{font-size:2rem;font-weight:900;color:var(--teal)}
+.mc-sub{font-size:12px;color:rgba(255,255,255,.5)}
+.mc-tag{display:inline-flex;align-items:center;background:rgba(0,196,154,.14);color:var(--teal);padding:3px 9px;border-radius:100px;font-size:11px;font-weight:700;margin-top:7px}
+
+/* ══ FEATURE CARDS ══ */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.25rem}
+
+@media(max-width:768px){
+  .feat-grid{grid-template-columns:1fr;gap:1rem}
+}
+.fc{background:#fff;border-radius:var(--rl);padding:1.85rem;border:1px solid var(--bdr);box-shadow:var(--sh);transition:all .25s;position:relative;overflow:hidden}
+.fc:hover{box-shadow:var(--sh2);transform:translateY(-4px)}
+.fc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--rl) var(--rl) 0 0}
+.fc.c1::before{background:var(--teal)}.fc.c2::before{background:var(--gold)}
+.fc.c3::before{background:var(--navy)}.fc.c4::before{background:#FF6B6B}
+.fc.c5::before{background:#8B5CF6}.fc.c6::before{background:var(--green)}
+.fi{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:1.1rem}
+.fi.t{background:var(--teal-bg)}.fi.g{background:var(--gold-bg)}.fi.n{background:rgba(11,31,58,.07)}
+.fi.r{background:rgba(255,107,107,.1)}.fi.p{background:rgba(139,92,246,.1)}.fi.gr{background:rgba(34,197,94,.1)}
+.fc h3{font-size:1rem;font-weight:800;margin-bottom:.5rem;letter-spacing:-.2px}
+.fc p{font-size:13px;color:var(--t-soft);line-height:1.65;margin-bottom:1.1rem}
+.ftag{display:inline-flex;align-items:center;font-size:11px;font-weight:700;color:var(--teal);background:var(--teal-bg);padding:3px 9px;border-radius:100px}
+
+/* ══ HOW IT WORKS ══ */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.5rem}
+
+@media(max-width:768px){
+  .steps{grid-template-columns:1fr;gap:1rem}
+}
+.step{text-align:center;padding:1.85rem 1.4rem;background:var(--cream);border-radius:var(--rl);border:1px solid var(--bdr);transition:box-shadow .2s}
+.step:hover{box-shadow:var(--sh)}
+.step-n{width:52px;height:52px;border-radius:50%;background:var(--navy);color:#fff;font-size:1.15rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;position:relative}
+.step-n::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px dashed rgba(0,196,154,.35)}
+.step h3{font-size:.95rem;font-weight:800;margin-bottom:.5rem}
+.step p{font-size:13px;color:var(--t-soft);line-height:1.6}
+
+/* ══ PRICING ══ */
+.plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.25rem;align-items:start}
+
+@media(max-width:768px){
+  .plan-grid{grid-template-columns:1fr;gap:1rem}
+  .plan.pop{transform:scale(1)}
+  .plan.pop:hover{transform:translateY(-4px)}
+}
+.plan{background:#fff;border-radius:var(--rxl);padding:2rem;border:1.5px solid var(--bdr);box-shadow:var(--sh);transition:all .25s}
+.plan:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
+.plan.pop{background:var(--navy);border-color:var(--teal);box-shadow:0 12px 48px rgba(0,196,154,.22);transform:scale(1.02)}
+.plan.pop:hover{transform:scale(1.02) translateY(-4px)}
+.plan-badge{display:inline-block;background:var(--teal);color:var(--navy);font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:3px 11px;border-radius:100px;margin-bottom:.9rem}
+.plan-name{font-size:1rem;font-weight:900;margin-bottom:.3rem}.plan.pop .plan-name{color:#fff}
+.plan-desc{font-size:12px;color:var(--t-soft);margin-bottom:1.3rem;line-height:1.5}.plan.pop .plan-desc{color:rgba(255,255,255,.55)}
+.plan-pr{font-size:2.2rem;font-weight:900}.plan.pop .plan-pr{color:var(--teal)}
+.plan-per{font-size:13px;color:var(--t-soft)}.plan.pop .plan-per{color:rgba(255,255,255,.45)}
+.plan-feats{display:flex;flex-direction:column;gap:9px;margin:1.3rem 0 1.8rem}
+.pf{display:flex;align-items:center;gap:9px;font-size:13px}.plan.pop .pf{color:rgba(255,255,255,.82)}
+.pf::before{content:'✓';width:18px;height:18px;flex-shrink:0;background:rgba(0,196,154,.15);color:var(--teal);border-radius:50%;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.plan-btn{width:100%;padding:11px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;border:none}
+.plan-btn.ol{background:transparent;border:1.5px solid var(--bdr2);color:var(--t-dark)}
+.plan-btn.ol:hover{border-color:var(--teal);color:var(--teal)}
+.plan-btn.fl{background:var(--teal);color:var(--navy)}
+.plan-btn.fl:hover{background:#00e5b4;transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,196,154,.35)}
+
+/* ══ TESTIMONIALS ══ */
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem}
+
+@media(max-width:768px){
+  .testi-grid{grid-template-columns:1fr;gap:1rem}
+}
+.testi{background:var(--cream);border-radius:var(--rl);padding:1.6rem;border:1px solid var(--bdr);transition:box-shadow .2s}
+.testi:hover{box-shadow:var(--sh)}
+.tsti-stars{color:var(--gold);font-size:15px;letter-spacing:2px;margin-bottom:.9rem}
+.tsti-txt{font-size:13px;color:var(--t-mid);line-height:1.72;margin-bottom:1.1rem;font-style:italic}
+.tsti-au{display:flex;align-items:center;gap:11px}
+.tav{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;flex-shrink:0}
+.tav-name{font-size:13px;font-weight:700}.tav-role{font-size:11px;color:var(--t-soft)}
+
+/* ══ CTA + FOOTER ══ */
+.cta-sec{background:var(--navy);text-align:center;padding:110px 1.5rem}
+
+@media(max-width:768px){
+  .cta-sec{padding:70px 1rem}
+  .cta-btns{flex-direction:column;width:100%;max-width:300px;margin:0 auto}
+  .cta-btns .btn-primary,.cta-btns .btn-outline-w{width:100%}
+}
+.cta-sec h2{font-size:clamp(2rem,4.5vw,3.5rem);font-weight:900;color:#fff;letter-spacing:-1.5px;line-height:1.1;margin-bottom:.9rem}
+.cta-sec h2 span{color:var(--teal)}
+.cta-sec p{color:rgba(255,255,255,.56);margin-bottom:2.2rem;font-size:1.05rem}
+.cta-btns{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
+footer{background:#060F1A;color:rgba(255,255,255,.4);padding:2.5rem 1.5rem;text-align:center;font-size:13px}
+.foot-logo{font-size:20px;font-weight:900;color:#fff;margin-bottom:.9rem}
+.foot-logo span{color:var(--teal)}
+.foot-links{display:flex;gap:1.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.2rem}
+.foot-links a{color:rgba(255,255,255,.42);text-decoration:none;transition:color .2s;cursor:pointer}
+.foot-links a:hover{color:#fff}
+
+/* ══ AUTH ══ */
+#auth-view{min-height:100vh;background:var(--navy);align-items:center;justify-content:center;padding:2rem;position:relative}
+
+@media(max-width:768px){
+  #auth-view{padding:1rem}
+  .auth-card{padding:1.75rem;max-width:100%}
+}
+#auth-view::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 700px 500px at 50% 40%,rgba(0,196,154,.12) 0%,transparent 70%)}
+.auth-card{background:#fff;border-radius:var(--rxl);padding:2.5rem;width:100%;max-width:440px;box-shadow:var(--sh2);position:relative;z-index:1}
+.auth-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1.75rem}
+.auth-logo .logo-name{color:var(--navy)}
+.auth-title{font-size:1.5rem;font-weight:900;text-align:center;margin-bottom:.4rem;letter-spacing:-.4px}
+.auth-sub{font-size:13px;color:var(--t-soft);text-align:center;margin-bottom:2rem;line-height:1.55}
+.auth-tabs{display:flex;background:var(--cream);border-radius:10px;padding:4px;margin-bottom:1.75rem}
+.auth-tab{flex:1;padding:9px;border-radius:7px;border:none;background:transparent;font-size:13px;font-weight:600;cursor:pointer;color:var(--t-soft);transition:all .2s}
+.auth-tab.on{background:#fff;color:var(--t-dark);box-shadow:0 1px 6px rgba(11,31,58,.1)}
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:12px;font-weight:700;color:var(--t-mid);margin-bottom:5px;letter-spacing:.2px}
+.fg input,.fg select{width:100%;padding:11px 14px;border-radius:9px;border:1.5px solid var(--bdr2);font-size:14px;background:#fff;color:var(--t-dark);outline:none;transition:border-color .2s;font-family:inherit}
+.fg input:focus,.fg select:focus{border-color:var(--teal)}
+.fg input::placeholder{color:var(--t-muted)}
+.btn-auth{width:100%;padding:13px;background:var(--teal);color:var(--navy);border:none;border-radius:10px;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-auth:hover{background:#00e5b4;transform:translateY(-1px)}
+.btn-auth:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.auth-sw{text-align:center;margin-top:1.25rem;font-size:13px;color:var(--t-soft)}
+.auth-sw a{color:var(--teal);font-weight:700;cursor:pointer}
+.auth-err{background:var(--red-bg);border:1px solid rgba(255,92,92,.25);color:#B91C1C;padding:9px 12px;border-radius:8px;font-size:13px;margin-bottom:1rem;display:none;line-height:1.5}
+.back-btn{position:absolute;top:1.5rem;left:1.5rem;color:rgba(255,255,255,.6);cursor:pointer;font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px;transition:color .2s;z-index:2;background:none;border:none}
+.back-btn:hover{color:#fff}
+
+/* ══ APP ══ */
+#app-view{min-height:100vh}
+.sb{width:var(--sb);background:var(--navy);min-height:100vh;display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:50}
+.sb-head{padding:1.25rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-nav{flex:1;padding:1rem 0;overflow-y:auto}
+.sb-item{display:flex;align-items:center;gap:11px;padding:.7rem 1.5rem;color:rgba(255,255,255,.6);font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;border:none;background:none;width:100%;text-align:left;border-right:3px solid transparent}
+.sb-item:hover{color:#fff;background:rgba(255,255,255,.05)}
+.sb-item.on{color:#fff;background:rgba(0,196,154,.12);border-right-color:var(--teal)}
+.sb-ic{font-size:18px;width:22px;text-align:center}
+.sb-foot{padding:1.25rem 1.5rem;border-top:1px solid rgba(255,255,255,.07)}
+.sb-user{display:flex;align-items:center;gap:10px}
+.sb-av{width:34px;height:34px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:var(--navy);flex-shrink:0}
+.sb-un{font-size:13px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-plan{font-size:11px;color:rgba(255,255,255,.38)}
+.sb-lo{background:none;border:none;color:rgba(255,255,255,.38);cursor:pointer;font-size:16px;padding:4px;transition:color .2s;margin-left:auto}
+.sb-lo:hover{color:#fff}
+.app-main{margin-left:var(--sb);flex:1;min-height:100vh;display:flex;flex-direction:column}
+.app-hdr{background:#fff;border-bottom:1px solid var(--bdr);padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;box-shadow:0 1px 0 var(--bdr)}
+.app-hdr-title{font-size:1rem;font-weight:800;letter-spacing:-.2px}
+.app-hdr-r{display:flex;align-items:center;gap:.875rem}
+.hdr-badge{background:var(--teal-bg);color:var(--teal2);font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;letter-spacing:.3px}
+.app-body{flex:1;padding:2rem;overflow-y:auto}
+.page{display:none}.page.on{display:block}
+
+/* Mobile App Layout */
+@media(max-width:768px){
+  .sb{width:100%;position:relative;min-height:auto}
+  .sb-nav{padding:.5rem 0}
+  .sb-item{padding:.6rem 1rem;font-size:13px}
+  .app-main{margin-left:0}
+  .app-hdr{padding:0 1rem;height:52px;flex-wrap:wrap}
+  .app-hdr-title{font-size:15px}
+  .app-hdr-r{gap:.5rem}
+  .hdr-badge{font-size:10px;padding:3px 8px}
+  .app-body{padding:1rem}
+}
+
+/* ══ DASHBOARD ══ */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(198px,1fr));gap:1rem;margin-bottom:2rem}
+
+@media(max-width:768px){
+  .kpi-grid{grid-template-columns:1fr 1fr;gap:.75rem}
+}
+@media(max-width:480px){
+  .kpi-grid{grid-template-columns:1fr}
+}
+.kpi{background:#fff;border-radius:var(--rl);padding:1.4rem 1.6rem;border:1px solid var(--bdr);box-shadow:var(--sh);position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kpi.green::before{background:var(--green)}.kpi.teal::before{background:var(--teal)}
+.kpi.red::before{background:var(--red)}.kpi.gold::before{background:var(--gold)}
+.kpi-lbl{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--t-soft);margin-bottom:.5rem}
+.kpi-val{font-size:1.85rem;font-weight:900;letter-spacing:-.5px;margin-bottom:.3rem}
+.kpi-d{font-size:12px;font-weight:600}
+.kpi-d.up{color:var(--green)}.kpi-d.dn{color:var(--red)}.kpi-d.neu{color:var(--t-soft)}
+.charts-row{display:grid;grid-template-columns:1.6fr 1fr;gap:1.5rem;margin-bottom:2rem}
+@media(max-width:900px){.charts-row{grid-template-columns:1fr}}
+.card{background:#fff;border-radius:var(--rl);padding:1.5rem;border:1px solid var(--bdr);box-shadow:var(--sh)}
+.card-t{font-size:.875rem;font-weight:800;margin-bottom:1.25rem;letter-spacing:-.1px;color:var(--t-dark)}
+.chart-wrap{position:relative;height:220px}
+
+/* ══ INSIGHTS ══ */
+.ins-list{display:flex;flex-direction:column;gap:.75rem}
+.ins-chip{display:flex;align-items:flex-start;gap:11px;padding:.9rem 1rem;border-radius:10px;border:1px solid var(--bdr);background:var(--cream);transition:box-shadow .2s}
+.ins-chip:hover{box-shadow:var(--sh)}
+.ins-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.ins-dot.high{background:var(--red)}.ins-dot.medium{background:var(--gold)}.ins-dot.low{background:var(--green)}
+.ins-body{flex:1}.ins-body h4{font-size:13px;font-weight:700;margin-bottom:3px;line-height:1.4}
+.ins-body p{font-size:12px;color:var(--t-soft);line-height:1.55}
+.ins-impact{color:var(--teal);font-size:12px;font-weight:700;margin-top:4px}
+.ins-act{background:none;border:1px solid var(--bdr2);border-radius:7px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer;color:var(--t-mid);transition:all .2s;flex-shrink:0;margin-top:2px}
+.ins-act:hover{border-color:var(--teal);color:var(--teal)}
+
+/* ══ TRANSACTIONS ══ */
+.tx-bar{display:flex;gap:.75rem;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center}
+
+@media(max-width:768px){
+  .tx-bar{gap:.5rem}
+  .tx-sel{font-size:12px;padding:7px 10px}
+  .btn-add{margin-left:0;width:100%;justify-content:center}
+  .tx-wrap{overflow-x:auto}
+  .tx-tbl{min-width:600px}
+  .tx-tbl th,.tx-tbl td{padding:10px 12px;font-size:12px}
+}
+.tx-sel{padding:8px 12px;border-radius:8px;border:1.5px solid var(--bdr2);font-size:13px;background:#fff;color:var(--t-dark);cursor:pointer;outline:none;font-family:inherit}
+.tx-sel:focus{border-color:var(--teal)}
+.btn-add{background:var(--teal);color:var(--navy);padding:9px 18px;border-radius:9px;font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .2s;margin-left:auto;display:flex;align-items:center;gap:6px}
+.btn-add:hover{background:#00e5b4}
+.tx-wrap{background:#fff;border-radius:var(--rl);border:1px solid var(--bdr);box-shadow:var(--sh);overflow:hidden}
+.tx-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tx-tbl th{background:var(--cream);padding:10px 16px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--t-soft);border-bottom:1px solid var(--bdr)}
+.tx-tbl td{padding:12px 16px;border-bottom:1px solid var(--bdr);vertical-align:middle}
+.tx-tbl tr:last-child td{border-bottom:none}
+.tx-tbl tr:hover td{background:rgba(11,31,58,.02)}
+.type-badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:100px;font-size:11px;font-weight:700}
+.type-badge.income{background:var(--green-bg);color:#15803D}
+.type-badge.expense{background:var(--red-bg);color:#DC2626}
+.tx-amt.income{color:var(--green);font-weight:700}
+.tx-amt.expense{color:var(--red);font-weight:700}
+.tx-empty{text-align:center;padding:3rem;color:var(--t-soft);font-size:14px}
+
+/* ══ MODAL ══ */
+.overlay{position:fixed;inset:0;background:rgba(11,31,58,.55);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:var(--rxl);padding:2rem;width:100%;max-width:420px;box-shadow:var(--sh2)}
+
+@media(max-width:768px){
+  .modal{padding:1.5rem;max-width:100%;margin:0 .5rem}
+  .modal-t{font-size:1rem}
+}
+.modal-t{font-size:1.1rem;font-weight:900;margin-bottom:1.5rem;letter-spacing:-.3px}
+.type-row{display:flex;gap:8px;margin-bottom:1rem}
+.type-btn{flex:1;padding:9px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;border:2px solid var(--bdr2);background:transparent;color:var(--t-soft);transition:all .2s}
+.type-btn.income.on{border-color:var(--green);background:var(--green-bg);color:#15803D}
+.type-btn.expense.on{border-color:var(--red);background:var(--red-bg);color:#DC2626}
+.modal-acts{display:flex;gap:.75rem;margin-top:1.25rem}
+.btn-cancel{flex:1;padding:11px;border-radius:9px;border:1.5px solid var(--bdr2);background:transparent;font-size:14px;font-weight:700;cursor:pointer;color:var(--t-mid);transition:all .2s}
+.btn-cancel:hover{border-color:var(--red);color:var(--red)}
+.btn-save{flex:2;padding:11px;border-radius:9px;border:none;background:var(--teal);font-size:14px;font-weight:800;cursor:pointer;color:var(--navy);transition:all .2s}
+.btn-save:hover{background:#00e5b4}
+.btn-save:disabled,.btn-auth:disabled{opacity:.6;cursor:not-allowed}
+
+/* ══ AI CHAT ══ */
+.ai-layout{display:grid;grid-template-columns:220px 1fr;gap:1.5rem;height:calc(100vh - 118px)}
+@media(max-width:900px){.ai-layout{grid-template-columns:1fr;height:auto}}
+@media(max-width:768px){
+  .ai-layout{gap:1rem}
+  .convo-panel{max-height:200px}
+  .chat-box{min-height:400px}
+  .chat-msgs{min-height:250px}
+  .msg-bbl{max-width:90%;font-size:13px;padding:9px 12px}
+  .chat-inp{font-size:13px;padding:9px 12px}
+  .btn-send{padding:0 14px;font-size:12px;height:38px}
+  .qb{font-size:10px;padding:3px 9px}
+}
+.convo-panel{background:#fff;border-radius:var(--rl);border:1px solid var(--bdr);box-shadow:var(--sh);display:flex;flex-direction:column;overflow:hidden}
+.convo-hd{padding:.875rem 1rem;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between}
+.convo-hd-lbl{font-size:12px;font-weight:800;color:var(--t-soft);letter-spacing:.5px;text-transform:uppercase}
+.btn-new{background:var(--teal-bg);color:var(--teal2);border:none;border-radius:7px;padding:5px 10px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-new:hover{background:var(--teal);color:var(--navy)}
+.convo-list{flex:1;overflow-y:auto;padding:.5rem}
+.convo-item{padding:.65rem .875rem;border-radius:8px;cursor:pointer;transition:all .2s;margin-bottom:3px;position:relative}
+.convo-item:hover{background:var(--cream)}
+.convo-item.on{background:var(--teal-bg)}
+.ci-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.ci-meta{font-size:11px;color:var(--t-muted)}
+.ci-del{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--t-muted);cursor:pointer;font-size:14px;opacity:0;transition:opacity .2s;padding:2px 5px}
+.convo-item:hover .ci-del{opacity:1}
+.ci-del:hover{color:var(--red)}
+.convo-empty{text-align:center;padding:2rem 1rem;font-size:12px;color:var(--t-soft);line-height:1.6}
+
+.chat-box{background:#fff;border-radius:var(--rl);border:1px solid var(--bdr);box-shadow:var(--sh);display:flex;flex-direction:column;overflow:hidden}
+.chat-hd{padding:1rem 1.25rem;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:11px}
+.chat-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--teal),#00e5b4);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:var(--navy);flex-shrink:0}
+.chat-status{font-size:11px;color:var(--teal);font-weight:600}
+.chat-intent{font-size:10px;color:var(--t-muted);margin-left:auto;background:var(--cream);padding:2px 8px;border-radius:100px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.chat-msgs{flex:1;padding:1.25rem;overflow-y:auto;display:flex;flex-direction:column;gap:.875rem;min-height:0}
+.msg{display:flex;gap:9px;align-items:flex-start}
+.msg.user{flex-direction:row-reverse}
+.msg-av{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+.msg-av.ai{background:rgba(0,196,154,.18);color:var(--teal)}
+.msg-av.usr{background:rgba(11,31,58,.1);color:var(--t-mid)}
+.msg-bbl{max-width:82%;padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.6;word-break:break-word;white-space:pre-wrap}
+.msg:not(.user) .msg-bbl{background:var(--cream);color:var(--t-dark);border-bottom-left-radius:4px}
+.msg.user .msg-bbl{background:var(--navy);color:#fff;font-weight:500;border-bottom-right-radius:4px}
+.chat-foot{padding:.875rem 1.1rem;border-top:1px solid var(--bdr)}
+.chat-inp-row{display:flex;gap:.625rem;margin-bottom:.625rem}
+.chat-inp{flex:1;padding:10px 14px;border-radius:10px;border:1.5px solid var(--bdr2);font-size:14px;outline:none;transition:border-color .2s;font-family:inherit;background:#fff;color:var(--t-dark)}
+.chat-inp:focus{border-color:var(--teal)}
+.chat-inp::placeholder{color:var(--t-muted)}
+.btn-send{padding:0 18px;border-radius:10px;background:var(--teal);border:none;cursor:pointer;font-size:13px;font-weight:800;color:var(--navy);transition:all .2s;white-space:nowrap;height:42px}
+.btn-send:hover{background:#00e5b4}
+.btn-send:disabled{opacity:.5;cursor:not-allowed}
+.qbtn-row{display:flex;gap:6px;flex-wrap:wrap}
+.qb{background:var(--cream);border:1px solid var(--bdr2);color:var(--t-mid);padding:4px 11px;border-radius:100px;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+.qb:hover{background:var(--teal-bg);border-color:var(--teal);color:var(--teal)}
+
+/* ══ FORECAST CARD ══ */
+.forecast-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+
+@media(max-width:768px){
+  .forecast-grid{grid-template-columns:1fr;gap:.75rem}
+}
+@media(max-width:600px){.forecast-grid{grid-template-columns:1fr}}
+.fc-box{background:#fff;border-radius:var(--rl);padding:1.4rem;border:1px solid var(--bdr);box-shadow:var(--sh)}
+.fc-period{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--t-soft);margin-bottom:.75rem}
+.fc-num{font-size:1.6rem;font-weight:900;margin-bottom:.25rem}
+.fc-num.pos{color:var(--green)}.fc-num.neg{color:var(--red)}
+.fc-conf{display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:700}
+.fc-conf.high{background:var(--green-bg);color:#15803D}
+.fc-conf.medium{background:var(--gold-bg);color:#92400E}
+.fc-conf.low{background:var(--red-bg);color:#DC2626}
+
+/* ══ TOAST & SPINNER ══ */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--navy);color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:var(--sh2);z-index:999;transform:translateY(80px);opacity:0;transition:all .3s;max-width:340px;line-height:1.5}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.ok{border-left:4px solid var(--teal)}
+.toast.err{border-left:4px solid var(--red)}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(0,196,154,.3);border-top-color:var(--teal);border-radius:50%;animation:sp .8s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--t-soft);font-size:14px;line-height:1.7}
+
+/* scrollbars */
+.chat-msgs::-webkit-scrollbar,.convo-list::-webkit-scrollbar,.sb-nav::-webkit-scrollbar{width:4px}
+.chat-msgs::-webkit-scrollbar-thumb,.convo-list::-webkit-scrollbar-thumb,.sb-nav::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:4px}
+
+/* ══ RESPONSIVE UTILITIES ══ */
+@media(max-width:768px){
+  /* Touch-friendly buttons */
+  button,a.btn-primary,.btn-teal,.btn-ghost,.btn-auth,.btn-add,.btn-send{
+    min-height:44px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  
+  /* Better input fields for mobile */
+  input,select,textarea{
+    font-size:16px !important; /* Prevents zoom on iOS */
+    -webkit-appearance:none;
+  }
+  
+  /* Improved scrolling */
+  .chat-msgs,.convo-list,.sb-nav,.app-body{
+    -webkit-overflow-scrolling:touch;
+  }
+  
+  /* Hide scrollbars on mobile for cleaner look */
+  .chat-msgs::-webkit-scrollbar,.convo-list::-webkit-scrollbar{
+    display:none;
+  }
+  
+  /* Better spacing for cards */
+  .card,.kpi,.fc,.testi,.plan{
+    padding:1.25rem;
+  }
+  
+  /* Responsive tables */
+  .tx-tbl th:first-child,.tx-tbl td:first-child{
+    position:sticky;
+    left:0;
+    background:#fff;
+    z-index:1;
+  }
+  .tx-tbl th:first-child{
+    background:var(--cream);
+  }
+  
+  /* Mobile navigation */
+  .main-nav .nav-links{display:none}
+  .sb{transform:translateX(-100%)}
+  .app-main{margin-left:0}
+  
+  /* Toast positioning */
+  .toast{bottom:1rem;right:1rem;left:1rem;max-width:none}
+}
+
+/* Tablet optimizations */
+@media(min-width:769px) and (max-width:1024px){
+  .sb{width:200px}
+  .app-main{margin-left:200px}
+  .app-body{padding:1.5rem}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .charts-row{grid-template-columns:1fr}
+}
+
+/* Large screens */
+@media(min-width:1400px){
+  .con{max-width:1280px}
+  .hero h1{font-size:5.2rem}
+  .kpi-grid{grid-template-columns:repeat(4,1fr)}
+}
+
+/* Print styles */
+@media print{
+  .main-nav,.sb,.app-hdr,.btn-add,.btn-send,.overlay,.toast{display:none !important}
+  .app-main{margin-left:0}
+  .app-body{padding:0}
+  .card,.kpi{box-shadow:none;border:1px solid #ddd}
+}
+
+/* Reduced motion for accessibility */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ LANDING ══════════ -->
+<div id="landing-view" class="view active">
+  <nav class="main-nav">
+    <div class="logo" onclick="showView('landing')">
+      <div class="logo-mark">F</div>
+      <span class="logo-name">Fin<span>Wise</span> AI</span>
+    </div>
+    <div class="nav-links">
+      <a onclick="scrollTo('#who')">Who it's for</a>
+      <a onclick="scrollTo('#features')">Features</a>
+      <a onclick="scrollTo('#pricing')">Pricing</a>
+    </div>
+    <div class="nav-r">
+      <button class="btn-ghost" onclick="showAuth('login')">Log in</button>
+      <button class="btn-teal"  onclick="showAuth('register')">Get started free</button>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-badge"><div class="dot-pulse"></div>AI-Powered Financial Intelligence</div>
+    <h1>Make <em>smarter money</em><br>decisions — instantly</h1>
+    <p class="hero-sub">FinWise AI helps businesses, organisations, and households cut costs, grow profits, manage cash flow, and eliminate financial risk — all in one simple conversation.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="showAuth('register')">Start free — no credit card →</button>
+      <button class="btn-outline-w" onclick="scrollTo('#features')">See what it does</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num"><span>₹</span>2.4M+</div><div class="stat-lbl">Savings identified</div></div>
+      <div><div class="stat-num">18<span>%</span></div><div class="stat-lbl">Avg cost reduction</div></div>
+      <div><div class="stat-num">4,200<span>+</span></div><div class="stat-lbl">Active users</div></div>
+    </div>
+  </div>
+
+  <!-- WHO -->
+  <section class="sec who-sec" id="who">
+    <div class="con">
+      <div class="sec-hdr">
+        <div class="sec-lbl">Who it's for</div>
+        <h2 class="sec-h">Built for every decision-maker</h2>
+        <p class="sec-p">Whether you're running a company, managing an NGO, or stretching a household budget — FinWise AI has you covered.</p>
+      </div>
+      <div class="tab-row">
+        <button class="tab-btn on" onclick="switchTab(this,'biz')">🏢 Businesses</button>
+        <button class="tab-btn"   onclick="switchTab(this,'org')">🏛 Organisations</button>
+        <button class="tab-btn"   onclick="switchTab(this,'hom')">🏠 Households</button>
+      </div>
+      <div id="tp-biz" class="tab-pnl on">
+        <div class="pl">
+          <h3>Grow profits. Cut waste. Scale faster.</h3>
+          <p>FinWise AI analyses your real transaction data to surface the exact levers that move your bottom line — no spreadsheets, no CFO required.</p>
+          <div class="who-feats">
+            <div class="wf"><div class="wf-ic t">📈</div><div class="wf-tx"><h4>Profit optimisation</h4><p>Pinpoints your highest-margin products and customers so you focus where it pays most.</p></div></div>
+            <div class="wf"><div class="wf-ic g">💸</div><div class="wf-tx"><h4>Cash flow forecasting</h4><p>90-day cash positions with early warnings before shortfalls become crises.</p></div></div>
+            <div class="wf"><div class="wf-ic n">🛡</div><div class="wf-tx"><h4>Financial risk alerts</h4><p>Flags overdue receivables, over-reliance on one supplier, and hidden risks in real time.</p></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="mc"><div class="mc-lbl">Monthly Revenue</div><div class="mc-val">₹84,20,000</div><div class="mc-sub">vs ₹71,50,000 last month</div><div class="mc-tag">↑ 17.8% growth</div></div>
+          <div class="mc" style="background:#0F6E56"><div class="mc-lbl">Cost Savings Found</div><div class="mc-val" style="color:#fff">₹4,80,000</div><div class="mc-sub">AI identified 14 opportunities</div><div class="mc-tag">Ready to action</div></div>
+          <div class="mc" style="background:#142D52"><div class="mc-lbl">Cash Flow Health</div><div class="mc-val">Strong ✓</div><div class="mc-sub">Next 30 days: positive</div><div class="mc-tag">↑ 42 days runway added</div></div>
+        </div>
+      </div>
+      <div id="tp-org" class="tab-pnl">
+        <div class="pl">
+          <h3>Do more with every rupee of budget.</h3>
+          <p>NGOs, government bodies, and non-profits face intense scrutiny on spending. FinWise AI keeps you compliant, transparent, and operating efficiently.</p>
+          <div class="who-feats">
+            <div class="wf"><div class="wf-ic t">📋</div><div class="wf-tx"><h4>Budget allocation AI</h4><p>Reallocate unused budget to highest-impact programs before the fiscal year closes.</p></div></div>
+            <div class="wf"><div class="wf-ic g">🔍</div><div class="wf-tx"><h4>Spend transparency</h4><p>Audit-ready reports for donors and boards — generated automatically.</p></div></div>
+            <div class="wf"><div class="wf-ic n">🏆</div><div class="wf-tx"><h4>Grant optimisation</h4><p>AI matches your programs to eligible grants and predicts approval likelihood.</p></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="mc"><div class="mc-lbl">Budget Utilisation</div><div class="mc-val">91.4%</div><div class="mc-sub">₹1.2Cr remaining</div><div class="mc-tag">↑ Best year yet</div></div>
+          <div class="mc" style="background:#533A0D"><div class="mc-lbl">Grants Found</div><div class="mc-val" style="color:var(--gold)">₹38,00,000</div><div class="mc-sub">6 matching programs</div><div class="mc-tag">3 applications ready</div></div>
+          <div class="mc" style="background:#142D52"><div class="mc-lbl">Admin Cost Ratio</div><div class="mc-val">8.2%</div><div class="mc-sub">Sector avg: 14.5%</div><div class="mc-tag">↑ 43% below average</div></div>
+        </div>
+      </div>
+      <div id="tp-hom" class="tab-pnl">
+        <div class="pl">
+          <h3>Stop the leaks. Protect your family's money.</h3>
+          <p>Most households lose 20–30% of income to invisible waste. FinWise AI finds the leaks and seals them, automatically.</p>
+          <div class="who-feats">
+            <div class="wf"><div class="wf-ic t">🔎</div><div class="wf-tx"><h4>Subscription & waste audit</h4><p>AI scans for unused subscriptions, duplicate charges, and hidden fees eating your budget.</p></div></div>
+            <div class="wf"><div class="wf-ic g">🛒</div><div class="wf-tx"><h4>Smarter spending decisions</h4><p>Real-time comparisons before big purchases. Never overpay for groceries, utilities, or insurance.</p></div></div>
+            <div class="wf"><div class="wf-ic n">🏦</div><div class="wf-tx"><h4>Emergency fund builder</h4><p>A personalised savings plan that builds your safety net without feeling the pinch.</p></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="mc"><div class="mc-lbl">Monthly Savings Found</div><div class="mc-val">₹8,400</div><div class="mc-sub">From subscriptions + utilities</div><div class="mc-tag">↑ Found in 10 mins</div></div>
+          <div class="mc" style="background:#0F6E56"><div class="mc-lbl">Household Budget</div><div class="mc-val" style="color:#fff">On track ✓</div><div class="mc-sub">₹12,000 surplus this month</div><div class="mc-tag">Best in 8 months</div></div>
+          <div class="mc" style="background:#142D52"><div class="mc-lbl">Emergency Fund</div><div class="mc-val">4.2 months</div><div class="mc-sub">Goal: 6 months — on pace</div><div class="mc-tag">↑ Target in 5 months</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="sec" id="features" style="background:var(--cream)">
+    <div class="con">
+      <div class="sec-hdr cen">
+        <div class="sec-lbl">Core capabilities</div>
+        <h2 class="sec-h">Six ways FinWise AI works for you</h2>
+        <p class="sec-p">Every feature delivers a direct financial outcome — not just dashboards and charts.</p>
+      </div>
+      <div class="feat-grid">
+        <div class="fc c1"><div class="fi t">📈</div><h3>Profit maximisation</h3><p>Identifies your highest-margin products, services, and customers — and tells you exactly how to double down on them.</p><span class="ftag">↑ Avg +22% margin</span></div>
+        <div class="fc c2"><div class="fi g">✂️</div><h3>Cost reduction engine</h3><p>Scans every expense line for vendor overcharges, duplicate spending, unused contracts, and smarter alternatives.</p><span class="ftag">₹ Avg 18% cost cut</span></div>
+        <div class="fc c3"><div class="fi n">🌊</div><h3>Cash flow intelligence</h3><p>90-day forecasts with early-warning alerts. Know your crunch points before they arrive — and act in time.</p><span class="ftag">30-day early warning</span></div>
+        <div class="fc c4"><div class="fi r">🧠</div><h3>Decision AI</h3><p>From "should I hire?" to "which supplier?" — evaluates every option against your real financial situation.</p><span class="ftag">Data-backed decisions</span></div>
+        <div class="fc c5"><div class="fi p">⏱</div><h3>Time-saving automation</h3><p>Automates reports, invoice matching, and expense categorisation so your team focuses on what matters.</p><span class="ftag">Avg 12 hrs/week saved</span></div>
+        <div class="fc c6"><div class="fi gr">🛡</div><h3>Financial risk radar</h3><p>Monitors for bad debts, customer concentration, interest rate exposure, and fraud signals 24/7.</p><span class="ftag">Real-time monitoring</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section class="sec" style="background:#fff">
+    <div class="con">
+      <div class="sec-hdr cen">
+        <div class="sec-lbl">How it works</div>
+        <h2 class="sec-h">Up and running in four steps</h2>
+        <p class="sec-p">No technical setup. No spreadsheets. Just tell FinWise your situation and it gets to work.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><h3>Create your account</h3><p>Sign up free and pick your category — business, organisation, or household.</p></div>
+        <div class="step"><div class="step-n">2</div><h3>Add your transactions</h3><p>Enter income and expenses. FinWise maps your full financial picture automatically.</p></div>
+        <div class="step"><div class="step-n">3</div><h3>Chat with the AI advisor</h3><p>Ask anything in plain English. The AI reads your real data and gives specific, actionable answers.</p></div>
+        <div class="step"><div class="step-n">4</div><h3>Track your progress</h3><p>Live dashboard, monthly AI analysis, and new insights as your data grows.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="sec" id="pricing" style="background:var(--cream)">
+    <div class="con">
+      <div class="sec-hdr cen">
+        <div class="sec-lbl">Pricing</div>
+        <h2 class="sec-h">Simple. Transparent. Worth it.</h2>
+        <p class="sec-p">Every plan pays for itself through the savings it finds within the first week.</p>
+      </div>
+      <div class="plan-grid">
+        <div class="plan"><div class="plan-name">Starter</div><div class="plan-desc">For households and freelancers.</div><div class="plan-pr">Free</div><div class="plan-feats"><div class="pf">50 transactions/month</div><div class="pf">Basic cost recommendations</div><div class="pf">30-day cash flow view</div><div class="pf">5 AI questions/day</div></div><button class="plan-btn ol" onclick="showAuth('register')">Get started free</button></div>
+        <div class="plan pop"><div class="plan-badge">Most Popular</div><div class="plan-name">Growth</div><div class="plan-desc">For small businesses serious about performance.</div><div class="plan-pr">₹2,999</div><span class="plan-per">/month</span><div class="plan-feats"><div class="pf">Everything in Starter</div><div class="pf">Unlimited AI advisor questions</div><div class="pf">90-day cash flow forecasting</div><div class="pf">Profit & margin optimisation</div><div class="pf">Financial risk radar</div><div class="pf">Weekly AI insights</div></div><button class="plan-btn fl" onclick="showAuth('register')">Start 14-day free trial</button></div>
+        <div class="plan"><div class="plan-name">Enterprise</div><div class="plan-desc">For larger companies and organisations.</div><div class="plan-pr">Custom</div><div class="plan-feats"><div class="pf">Everything in Growth</div><div class="pf">Multi-entity support</div><div class="pf">API & accounting integration</div><div class="pf">Custom AI training on your data</div><div class="pf">Dedicated financial AI analyst</div></div><button class="plan-btn ol" onclick="showAuth('register')">Contact sales</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="sec" style="background:#fff">
+    <div class="con">
+      <div class="sec-hdr cen"><div class="sec-lbl">What users say</div><h2 class="sec-h">Real results from real people</h2></div>
+      <div class="testi-grid">
+        <div class="testi"><div class="tsti-stars">★★★★★</div><div class="tsti-txt">"FinWise found ₹1.8 lakh in annual savings within the first week — just from vendor contracts and subscriptions I'd forgotten about. It paid for itself 60×."</div><div class="tsti-au"><div class="tav" style="background:var(--navy)">RK</div><div><div class="tav-name">Rajesh Kumar</div><div class="tav-role">Owner, Kumar Electronics, Ahmedabad</div></div></div></div>
+        <div class="testi"><div class="tsti-stars">★★★★★</div><div class="tsti-txt">"FinWise reduced our admin costs by 31% and found two grant programs worth ₹24 lakhs we'd missed entirely. Every NGO needs this."</div><div class="tsti-au"><div class="tav" style="background:#0F6E56">PS</div><div><div class="tav-name">Priya Sharma</div><div class="tav-role">Director, Lakshya Foundation, Mumbai</div></div></div></div>
+        <div class="testi"><div class="tsti-stars">★★★★★</div><div class="tsti-txt">"I was spending ₹12,000 a month without knowing where it went. Now I'm saving ₹4,500 every month. My family finally has a financial cushion."</div><div class="tsti-au"><div class="tav" style="background:#533A0D">AM</div><div><div class="tav-name">Ananya Mehta</div><div class="tav-role">Teacher & homemaker, Surat</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-sec"><div class="con">
+    <h2>Start making your money<br><span>work harder</span> — today</h2>
+    <p>Join 4,200+ businesses, organisations, and households already using FinWise AI.</p>
+    <div class="cta-btns">
+      <button class="btn-primary" onclick="showAuth('register')">Try for free — no credit card →</button>
+      <button class="btn-outline-w" onclick="scrollTo('#pricing')">See all plans</button>
+    </div>
+  </div></div>
+
+  <footer>
+    <div class="foot-logo">Fin<span>Wise</span> AI</div>
+    <div class="foot-links"><a>About</a><a>Features</a><a>Pricing</a><a>Privacy</a><a>Terms</a><a>Contact</a></div>
+    <p>© 2026 FinWise AI — Making financial intelligence accessible to everyone.</p>
+  </footer>
+</div>
+
+<!-- ══════════ AUTH ══════════ -->
+<div id="auth-view" class="view">
+  <button class="back-btn" onclick="showView('landing')">← Back</button>
+  <div class="auth-card">
+    <div class="auth-logo"><div class="logo-mark">F</div><span class="logo-name">Fin<span>Wise</span> AI</span></div>
+    <div class="auth-title" id="auth-title">Create your free account</div>
+    <div class="auth-sub"   id="auth-sub">Smarter money decisions start here.</div>
+    <div class="auth-tabs">
+      <button class="auth-tab on" id="atab-reg" onclick="switchAuthTab('register')">Sign up</button>
+      <button class="auth-tab"    id="atab-log" onclick="switchAuthTab('login')">Log in</button>
+    </div>
+    <div id="auth-err" class="auth-err"></div>
+
+    <div id="form-reg">
+      <div class="fg"><label>Your name</label><input id="r-name"  type="text"     placeholder="e.g. Rajesh Kumar"></div>
+      <div class="fg"><label>Email</label>    <input id="r-email" type="email"    placeholder="you@example.com"></div>
+      <div class="fg"><label>Password</label> <input id="r-pass"  type="password" placeholder="Min. 6 characters"></div>
+      <div class="fg"><label>I am a…</label>
+        <select id="r-type">
+          <option value="business">Business owner</option>
+          <option value="organisation">Organisation / NGO</option>
+          <option value="household">Household / individual</option>
+        </select>
+      </div>
+      <button class="btn-auth" id="btn-reg" onclick="doRegister()">Create account →</button>
+    </div>
+
+    <div id="form-log" style="display:none">
+      <div class="fg"><label>Email</label>    <input id="l-email" type="email"    placeholder="you@example.com"></div>
+      <div class="fg"><label>Password</label> <input id="l-pass"  type="password" placeholder="Your password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="btn-auth" id="btn-log" onclick="doLogin()">Log in →</button>
+    </div>
+    <div class="auth-sw" id="auth-sw">Already have an account? <a onclick="switchAuthTab('login')">Log in</a></div>
+  </div>
+</div>
+
+<!-- ══════════ APP ══════════ -->
+<div id="app-view" class="view">
+  <div class="sb">
+    <div class="sb-head">
+      <div class="logo"><div class="logo-mark">F</div><span class="logo-name">Fin<span>Wise</span> AI</span></div>
+    </div>
+    <nav class="sb-nav">
+      <button class="sb-item on" onclick="goPage('dashboard',this)">   <span class="sb-ic">📊</span>Dashboard</button>
+      <button class="sb-item"    onclick="goPage('transactions',this)"><span class="sb-ic">💳</span>Transactions</button>
+      <button class="sb-item"    onclick="goPage('ai-advisor',this)">  <span class="sb-ic">🤖</span>AI Advisor</button>
+      <button class="sb-item"    onclick="goPage('insights',this)">    <span class="sb-ic">💡</span>Insights</button>
+      <button class="sb-item"    onclick="goPage('forecast',this)">    <span class="sb-ic">🔮</span>Cash Forecast</button>
+    </nav>
+    <div class="sb-foot">
+      <div class="sb-user">
+        <div class="sb-av" id="sb-av">U</div>
+        <div style="flex:1;min-width:0"><div class="sb-un" id="sb-name">—</div><div class="sb-plan" id="sb-plan">starter plan</div></div>
+        <button class="sb-lo" onclick="doLogout()" title="Log out">↩</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-main">
+    <div class="app-hdr">
+      <div class="app-hdr-title" id="page-title">Dashboard</div>
+      <div class="app-hdr-r">
+        <div class="hdr-badge" id="hdr-type">Business</div>
+        <button class="btn-teal" style="font-size:13px;padding:8px 14px" onclick="goPage('ai-advisor',null)">Ask AI →</button>
+      </div>
+    </div>
+    <div class="app-body">
+
+      <!-- DASHBOARD -->
+      <div id="page-dashboard" class="page on">
+        <div class="kpi-grid">
+          <div class="kpi teal"><div class="kpi-lbl">Monthly Income</div><div class="kpi-val" id="kpi-inc">—</div><div class="kpi-d neu" id="kpi-inc-d">Loading…</div></div>
+          <div class="kpi red"> <div class="kpi-lbl">Monthly Expenses</div><div class="kpi-val" id="kpi-exp">—</div><div class="kpi-d neu" id="kpi-exp-d">Loading…</div></div>
+          <div class="kpi green"><div class="kpi-lbl">Net Profit / Savings</div><div class="kpi-val" id="kpi-net">—</div><div class="kpi-d neu" id="kpi-net-d">vs last month</div></div>
+          <div class="kpi gold"><div class="kpi-lbl">Transactions</div><div class="kpi-val" id="kpi-tx">—</div><div class="kpi-d neu">This month</div></div>
+        </div>
+        <div class="charts-row">
+          <div class="card"><div class="card-t">Income vs Expenses — 6 months</div><div class="chart-wrap"><canvas id="chart-trend"></canvas></div></div>
+          <div class="card"><div class="card-t">Top expense categories</div><div class="chart-wrap"><canvas id="chart-cats"></canvas></div></div>
+        </div>
+        <div class="card"><div class="card-t">AI Insights</div><div class="ins-list" id="dash-insights"><div class="empty-state"><span class="spin"></span> Loading insights…</div></div></div>
+      </div>
+
+      <!-- TRANSACTIONS -->
+      <div id="page-transactions" class="page">
+        <div class="tx-bar">
+          <select class="tx-sel" id="tf-type" onchange="loadTx()">
+            <option value="">All types</option><option value="income">Income</option><option value="expense">Expense</option>
+          </select>
+          <select class="tx-sel" id="tf-cat" onchange="loadTx()">
+            <option value="">All categories</option>
+            <option value="sales">Sales</option><option value="service">Service</option><option value="salary">Salary received</option><option value="freelance">Freelance</option><option value="investment">Investment</option><option value="grant">Grant</option><option value="rental">Rental</option><option value="other_income">Other income</option>
+            <option value="rent">Rent</option><option value="utilities">Utilities</option><option value="salaries">Salaries paid</option><option value="marketing">Marketing</option><option value="supplies">Supplies</option><option value="software">Software</option><option value="transport">Transport</option><option value="food">Food</option><option value="healthcare">Healthcare</option><option value="education">Education</option><option value="entertainment">Entertainment</option><option value="insurance">Insurance</option><option value="loan_repayment">Loan repayment</option><option value="taxes">Taxes</option><option value="maintenance">Maintenance</option><option value="subscription">Subscription</option><option value="vendor">Vendor</option><option value="other_expense">Other expense</option>
+          </select>
+          <button class="btn-add" onclick="importCSV()" style="background:var(--navy);margin-right:.5rem">📊 Import CSV</button>
+          <button class="btn-add" onclick="openModal()">+ Add transaction</button>
+        </div>
+        <div class="tx-wrap">
+          <table class="tx-tbl">
+            <thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Type</th><th>Amount</th><th></th></tr></thead>
+            <tbody id="tx-body"><tr><td colspan="6" class="tx-empty"><span class="spin"></span> Loading from MongoDB…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- AI ADVISOR -->
+      <div id="page-ai-advisor" class="page">
+        <div class="ai-layout">
+          <div class="convo-panel">
+            <div class="convo-hd">
+              <div class="convo-hd-lbl">Conversations</div>
+              <button class="btn-new" onclick="newConvo()">+ New</button>
+            </div>
+            <div class="convo-list" id="convo-list">
+              <div class="convo-empty">No conversations yet.<br>Ask the AI anything below.</div>
+            </div>
+          </div>
+          <div class="chat-box">
+            <div class="chat-hd">
+              <div class="chat-av">F</div>
+              <div>
+                <div style="font-size:14px;font-weight:700">FinWise AI Advisor</div>
+                <div class="chat-status">● Connected to MongoDB</div>
+              </div>
+              <div class="chat-intent" id="chat-intent" style="display:none"></div>
+            </div>
+            <div class="chat-msgs" id="chat-msgs">
+              <div class="msg">
+                <div class="msg-av ai">F</div>
+                <div class="msg-bbl">Hi! I'm your FinWise AI advisor. I can see your real financial data from MongoDB and give you specific, personalised advice — not generic tips.<br><br>Ask me anything: about your costs, profits, cash flow, risks, or savings. What would you like to work on?</div>
+              </div>
+            </div>
+            <div class="chat-foot">
+              <div class="chat-inp-row">
+                <input class="chat-inp" id="chat-inp" placeholder="Ask about your finances…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg()}">
+                <button class="btn-send" id="btn-send" onclick="sendMsg()">Send →</button>
+              </div>
+              <div class="qbtn-row">
+                <button class="qb" onclick="ask('Where am I losing the most money?')">Biggest losses</button>
+                <button class="qb" onclick="ask('How can I improve my cash flow this month?')">Cash flow</button>
+                <button class="qb" onclick="ask('What are my top opportunities to cut costs?')">Cut costs</button>
+                <button class="qb" onclick="ask('What financial risks do I have right now?')">Risk check</button>
+                <button class="qb" onclick="ask('How do I increase my profit this month?')">Grow profit</button>
+                <button class="qb" onclick="ask('Give me a detailed budget plan for next month')">Budget plan</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INSIGHTS -->
+      <div id="page-insights" class="page">
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+            <div class="card-t" style="margin-bottom:0">AI-Generated Insights</div>
+            <button class="btn-teal" style="font-size:13px;padding:8px 16px" onclick="runAnalysis(this)">🔍 Run full analysis</button>
+          </div>
+          <div class="ins-list" id="full-insights"><div class="empty-state"><span class="spin"></span>Loading…</div></div>
+        </div>
+      </div>
+
+      <!-- FORECAST -->
+      <div id="page-forecast" class="page">
+        <div class="card" style="margin-bottom:1.5rem">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+            <div class="card-t" style="margin-bottom:0">Cash Flow Forecast</div>
+            <button class="btn-teal" style="font-size:13px;padding:8px 16px" onclick="loadForecast(this)">🔮 Generate forecast</button>
+          </div>
+          <div id="forecast-content"><div class="empty-state">Click "Generate forecast" to get your 30 & 90-day cash flow projection powered by AI.<br><small>Requires at least 5 transactions in MongoDB.</small></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="tx-overlay">
+  <div class="modal">
+    <div class="modal-t">Add transaction</div>
+    <div class="type-row">
+      <button class="type-btn income on" id="tb-inc"  onclick="setType('income')">Income</button>
+      <button class="type-btn expense"   id="tb-exp"  onclick="setType('expense')">Expense</button>
+    </div>
+    <div class="fg"><label>Amount (₹)</label><input id="m-amt"  type="number" min="0.01" step="0.01" placeholder="e.g. 5000"></div>
+    <div class="fg"><label>Category</label>
+      <select id="m-cat">
+        <option value="sales">Sales</option><option value="service">Service revenue</option><option value="salary">Salary received</option><option value="freelance">Freelance income</option><option value="investment">Investment return</option><option value="grant">Grant / donation</option><option value="rental">Rental income</option><option value="other_income">Other income</option>
+        <option value="rent">Rent</option><option value="utilities">Utilities</option><option value="salaries">Salaries paid</option><option value="marketing">Marketing</option><option value="supplies">Supplies</option><option value="software">Software / SaaS</option><option value="transport">Transport</option><option value="food">Food</option><option value="healthcare">Healthcare</option><option value="education">Education</option><option value="entertainment">Entertainment</option><option value="insurance">Insurance</option><option value="loan_repayment">Loan repayment</option><option value="taxes">Taxes</option><option value="maintenance">Maintenance</option><option value="subscription">Subscription</option><option value="vendor">Vendor / supplier</option><option value="other_expense">Other expense</option>
+      </select>
+    </div>
+    <div class="fg"><label>Description</label><input id="m-desc" type="text"   placeholder="e.g. Office rent — July"></div>
+    <div class="fg"><label>Date</label>       <input id="m-date" type="date"></div>
+    <div class="modal-acts">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save"   id="btn-save" onclick="saveTx()">Save to MongoDB</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  FinWise AI  —  Frontend
+//  All API calls hit /api/* (same Express server, port 5000)
+// ══════════════════════════════════════════════════════════════
+const API = '/api';
+let token   = localStorage.getItem('fw_token');
+let ME      = null;
+let convId  = null;
+let txType  = 'income';
+let tChart  = null;
+let cChart  = null;
+
+// ── helpers ────────────────────────────────────────────────────
+const fmt     = n  => '₹' + Number(n||0).toLocaleString('en-IN');
+const fmtDate = d  => new Date(d).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+const cap     = s  => s ? s[0].toUpperCase()+s.slice(1).replace(/_/g,' ') : '';
+
+function toast(msg, type='ok') {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = `toast show ${type}`;
+  setTimeout(() => el.className = 'toast', 3500);
+}
+
+async function req(path, opts={}) {
+  const h = {'Content-Type':'application/json'};
+  if (token) h['Authorization'] = 'Bearer ' + token;
+  const r = await fetch(API+path, {...opts, headers:h});
+  const j = await r.json();
+  if (!r.ok) {
+    // If unauthorized, clear token and redirect to login
+    if (r.status === 401) {
+      localStorage.removeItem('fw_token');
+      token = null;
+      ME = null;
+      showView('landing');
+      throw new Error('Session expired. Please log in again.');
+    }
+    throw new Error(j.message || `Error ${r.status}`);
+  }
+  return j;
+}
+
+// ── views ──────────────────────────────────────────────────────
+function showView(v) {
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  document.getElementById(v+'-view').classList.add('active');
+  window.scrollTo(0,0);
+}
+function scrollTo(s) { document.querySelector(s)?.scrollIntoView({behavior:'smooth'}); }
+function switchTab(b, id) {
+  document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.tab-pnl').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); document.getElementById('tp-'+id).classList.add('on');
+}
+function showAuth(m){ showView('auth'); switchAuthTab(m); }
+function switchAuthTab(m) {
+  const r = m==='register';
+  document.getElementById('atab-reg').classList.toggle('on',r);
+  document.getElementById('atab-log').classList.toggle('on',!r);
+  document.getElementById('form-reg').style.display = r?'block':'none';
+  document.getElementById('form-log').style.display = r?'none':'block';
+  document.getElementById('auth-title').textContent = r?'Create your free account':'Welcome back';
+  document.getElementById('auth-sub').textContent   = r?'Smarter money decisions start here.':'Log in to your FinWise account.';
+  document.getElementById('auth-sw').innerHTML      = r
+    ? 'Already have an account? <a onclick="switchAuthTab(\'login\')">Log in</a>'
+    : 'No account? <a onclick="switchAuthTab(\'register\')">Sign up free</a>';
+  document.getElementById('auth-err').style.display='none';
+}
+function authErr(m){ const e=document.getElementById('auth-err'); e.textContent=m; e.style.display='block'; }
+function setBtnLoading(id,on,def){
+  const b=document.getElementById(id);
+  b.disabled=on;
+  b.innerHTML=on?'<span class="spin"></span>Please wait…':def;
+}
+
+// ── auth ───────────────────────────────────────────────────────
+async function doRegister(){
+  const name=document.getElementById('r-name').value.trim();
+  const email=document.getElementById('r-email').value.trim();
+  const pass=document.getElementById('r-pass').value;
+  const userType=document.getElementById('r-type').value;
+  if(!name||!email||!pass) return authErr('Please fill in all fields.');
+  if(pass.length<6) return authErr('Password must be at least 6 characters.');
+  setBtnLoading('btn-reg',true,'Create account →');
+  try {
+    const d = await req('/auth/register',{method:'POST',body:JSON.stringify({name,email,password:pass,userType})});
+    token=d.token; ME=d.data; localStorage.setItem('fw_token',token); enterApp();
+  } catch(e){ authErr(e.message); } finally { setBtnLoading('btn-reg',false,'Create account →'); }
+}
+
+async function doLogin(){
+  const email=document.getElementById('l-email').value.trim();
+  const pass=document.getElementById('l-pass').value;
+  if(!email||!pass) return authErr('Please enter your email and password.');
+  setBtnLoading('btn-log',true,'Log in →');
+  try {
+    const d = await req('/auth/login',{method:'POST',body:JSON.stringify({email,password:pass})});
+    token=d.token; ME=d.data; localStorage.setItem('fw_token',token); enterApp();
+  } catch(e){ authErr(e.message); } finally { setBtnLoading('btn-log',false,'Log in →'); }
+}
+
+function doLogout(){
+  token=null; ME=null; convId=null;
+  if(tChart){tChart.destroy();tChart=null;} if(cChart){cChart.destroy();cChart=null;}
+  localStorage.removeItem('fw_token'); showView('landing');
+}
+
+// ── app init ───────────────────────────────────────────────────
+function enterApp(){
+  showView('app');
+  const name = ME?.name||'User';
+  document.getElementById('sb-av').textContent   = name[0].toUpperCase();
+  document.getElementById('sb-name').textContent  = name;
+  document.getElementById('sb-plan').textContent  = (ME?.plan||'starter')+' plan';
+  document.getElementById('hdr-type').textContent = cap(ME?.userType||'User');
+  loadDashboard(); loadInsights('dash-insights'); loadInsights('full-insights'); loadConvos(); loadTx();
+}
+
+function goPage(name, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.getElementById('page-'+name).classList.add('on');
+  document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  const titles={dashboard:'Dashboard',transactions:'Transactions','ai-advisor':'AI Advisor',insights:'Insights',forecast:'Cash Forecast'};
+  document.getElementById('page-title').textContent = titles[name]||name;
+}
+
+// ── dashboard ──────────────────────────────────────────────────
+async function loadDashboard(){
+  try {
+    const {data:d} = await req('/transactions/analytics/summary');
+    const tm=d.thisMonth, ch=d.changes;
+    document.getElementById('kpi-inc').textContent = fmt(tm.income);
+    document.getElementById('kpi-exp').textContent = fmt(tm.expenses);
+    document.getElementById('kpi-net').textContent = fmt(tm.profit);
+    document.getElementById('kpi-tx').textContent  = tm.txCount||0;
+    const delta=(id,val)=>{
+      const el=document.getElementById(id);
+      if(val==null){el.textContent='No prior data';el.className='kpi-d neu';return;}
+      const v=parseFloat(val);
+      el.textContent=(v>=0?'↑ ':'↓ ')+Math.abs(v)+'% vs last month';
+      el.className='kpi-d '+(v>=0?'up':'dn');
+    };
+    delta('kpi-inc-d',ch.income); delta('kpi-exp-d',ch.expenses); delta('kpi-net-d',ch.profit);
+    drawTrend(d.monthlyTrend||[]); drawCats(d.categoryBreakdown||[]);
+  } catch(e){
+    toast('Dashboard: '+e.message,'err');
+    drawTrend([]); drawCats([]);
+  }
+}
+
+function drawTrend(raw){
+  const ctx=document.getElementById('chart-trend').getContext('2d');
+  if(tChart) tChart.destroy();
+  const now=new Date();
+  const labels=Array.from({length:6},(_,i)=>{
+    const d=new Date(now.getFullYear(),now.getMonth()-5+i,1);
+    return d.toLocaleString('en-IN',{month:'short'});
+  });
+  const build=type=>Array.from({length:6},(_,i)=>{
+    const mo=((now.getMonth()-5+i)%12)+1;
+    const yr=new Date(now.getFullYear(),now.getMonth()-5+i,1).getFullYear();
+    const f=raw.find(r=>r._id&&r._id.type===type&&r._id.mo===mo&&r._id.yr===yr);
+    return f?f.total:0;
+  });
+  tChart=new Chart(ctx,{
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Income',  data:build('income'), backgroundColor:'rgba(0,196,154,.75)',borderRadius:6},
+      {label:'Expenses',data:build('expense'),backgroundColor:'rgba(255,92,92,.65)', borderRadius:6}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},
+      scales:{
+        y:{ticks:{callback:v=>'₹'+(v/1000).toFixed(0)+'k',font:{size:11}},grid:{color:'rgba(0,0,0,.04)'}},
+        x:{ticks:{font:{size:11}},grid:{display:false}}
+      }}
+  });
+}
+
+function drawCats(cats){
+  const ctx=document.getElementById('chart-cats').getContext('2d');
+  if(cChart) cChart.destroy();
+  const labels=cats.length?cats.map(c=>cap(c._id)):['No data yet'];
+  const data  =cats.length?cats.map(c=>c.total):[1];
+  cChart=new Chart(ctx,{
+    type:'doughnut',
+    data:{labels,datasets:[{data,backgroundColor:['#0B1F3A','#00C49A','#F5A623','#FF5C5C','#8B5CF6','#22C55E','#06B6D4','#F59E0B'],borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11},boxWidth:12}}},cutout:'65%'}
+  });
+}
+
+// ── insights ───────────────────────────────────────────────────
+async function loadInsights(cid){
+  try {
+    const {data} = await req('/ai/insights');
+    renderInsights(data, cid);
+  } catch(e){
+    const el=document.getElementById(cid);
+    if(el) el.innerHTML=`<div class="empty-state">Add transactions then click "Run full analysis" to generate AI insights.</div>`;
+  }
+}
+
+function renderInsights(items, cid){
+  const el=document.getElementById(cid);
+  if(!el) return;
+  if(!items||!items.length){
+    el.innerHTML='<div class="empty-state">No insights yet — add transactions and click "Run full analysis".</div>';
+    return;
+  }
+  el.innerHTML=items.slice(0,8).map(i=>`
+    <div class="ins-chip">
+      <div class="ins-dot ${i.priority||'medium'}"></div>
+      <div class="ins-body">
+        <h4>${i.title}</h4>
+        <p>${i.description}</p>
+        ${i.estimatedImpact>0?`<div class="ins-impact">Estimated impact: ${fmt(i.estimatedImpact)}</div>`:''}
+      </div>
+      <button class="ins-act" onclick="dismissInsight('${i._id}',this)">Done ✓</button>
+    </div>`).join('');
+}
+
+async function dismissInsight(id, btn){
+  btn.closest('.ins-chip').style.opacity='0.35';
+  try{ await req('/ai/insights/'+id,{method:'PATCH',body:JSON.stringify({actionTaken:true})}); toast('Marked as done ✓'); }catch{}
+  setTimeout(()=>btn.closest('.ins-chip').remove(),400);
+}
+
+async function runAnalysis(btn){
+  btn.disabled=true; btn.textContent='Analysing…';
+  toast('Analysing your MongoDB data with AI…');
+  try {
+    const {data,message} = await req('/ai/analyse',{method:'POST'});
+    toast(message||'Analysis complete!','ok');
+    renderInsights(data,'full-insights');
+    renderInsights(data,'dash-insights');
+  } catch(e){ toast(e.message,'err'); }
+  finally{ btn.disabled=false; btn.textContent='🔍 Run full analysis'; }
+}
+
+// ── transactions ───────────────────────────────────────────────
+async function loadTx(){
+  const type=document.getElementById('tf-type').value;
+  const cat =document.getElementById('tf-cat').value;
+  const tb  =document.getElementById('tx-body');
+  tb.innerHTML='<tr><td colspan="6" class="tx-empty"><span class="spin"></span> Loading from MongoDB…</td></tr>';
+  try {
+    let qs='?limit=80';
+    if(type) qs+='&type='+type;
+    if(cat)  qs+='&category='+cat;
+    const {data}=await req('/transactions'+qs);
+    if(!data.length){
+      tb.innerHTML='<tr><td colspan="6" class="tx-empty">No transactions yet — click "+ Add transaction" to get started.</td></tr>';
+      return;
+    }
+    tb.innerHTML=data.map(t=>`
+      <tr>
+        <td style="color:var(--t-soft);font-size:12px">${fmtDate(t.date)}</td>
+        <td style="font-weight:600">${t.description||'—'}</td>
+        <td><span style="font-size:12px;color:var(--t-mid)">${cap(t.category)}</span></td>
+        <td><span class="type-badge ${t.type}">${cap(t.type)}</span></td>
+        <td class="tx-amt ${t.type}">${t.type==='income'?'+':'-'}${fmt(t.amount)}</td>
+        <td><button onclick="delTx('${t._id}',this)" style="background:none;border:none;cursor:pointer;color:var(--t-muted);font-size:18px;transition:color .2s" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--t-muted)'">×</button></td>
+      </tr>`).join('');
+  } catch(e){
+    tb.innerHTML=`<tr><td colspan="6" class="tx-empty">Error: ${e.message}</td></tr>`;
+    toast(e.message,'err');
+  }
+}
+
+async function delTx(id, btn){
+  if(!confirm('Delete this transaction from MongoDB?')) return;
+  const row=btn.closest('tr'); row.style.opacity='0.35';
+  try {
+    await req('/transactions/'+id,{method:'DELETE'});
+    row.remove(); toast('Deleted from MongoDB'); loadDashboard();
+  } catch(e){ row.style.opacity='1'; toast(e.message,'err'); }
+}
+
+function openModal(){
+  document.getElementById('tx-overlay').classList.add('open');
+  document.getElementById('m-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('m-amt').value=''; document.getElementById('m-desc').value='';
+  setType('income');
+}
+function closeModal(){ document.getElementById('tx-overlay').classList.remove('open'); }
+function setType(t){
+  txType=t;
+  document.getElementById('tb-inc').className='type-btn income'+(t==='income'?' on':'');
+  document.getElementById('tb-exp').className='type-btn expense'+(t==='expense'?' on':'');
+}
+async function saveTx(){
+  const amt=parseFloat(document.getElementById('m-amt').value);
+  const cat=document.getElementById('m-cat').value;
+  const desc=document.getElementById('m-desc').value.trim();
+  const date=document.getElementById('m-date').value;
+  if(!amt||amt<=0) return toast('Enter a valid amount','err');
+  if(!date)        return toast('Select a date','err');
+  const btn=document.getElementById('btn-save');
+  btn.disabled=true; btn.textContent='Saving…';
+  try {
+    await req('/transactions',{method:'POST',body:JSON.stringify({type:txType,amount:amt,category:cat,description:desc,date})});
+    toast('Saved to MongoDB ✓'); closeModal(); loadTx(); loadDashboard();
+  } catch(e){ toast(e.message,'err'); }
+  finally{ btn.disabled=false; btn.textContent='Save to MongoDB'; }
+}
+
+// ── AI chat ────────────────────────────────────────────────────
+async function loadConvos(){
+  try {
+    const {data}=await req('/ai/conversations');
+    const el=document.getElementById('convo-list');
+    if(!data.length){ el.innerHTML='<div class="convo-empty">No conversations yet.<br>Ask the AI anything below.</div>'; return; }
+    el.innerHTML=data.map(c=>`
+      <div class="convo-item ${convId===c.id?'on':''}" onclick="loadConvo('${c.id}',this)" id="ci-${c.id}">
+        <div class="ci-title">${c.title}</div>
+        <div class="ci-meta">${c.messageCount} msgs · ${fmtDate(c.updatedAt)}</div>
+        <button class="ci-del" onclick="event.stopPropagation();delConvo('${c.id}')" title="Delete">×</button>
+      </div>`).join('');
+  } catch{}
+}
+
+async function loadConvo(id, el){
+  convId=id;
+  document.querySelectorAll('.convo-item').forEach(i=>i.classList.remove('on'));
+  el?.classList.add('on');
+  try {
+    const {data}=await req('/ai/conversations/'+id);
+    document.getElementById('chat-msgs').innerHTML='';
+    data.messages.forEach(m=>appendMsg(m.role,m.content));
+  } catch(e){ toast(e.message,'err'); }
+}
+
+async function delConvo(id){
+  if(!confirm('Delete this conversation?')) return;
+  try { await req('/ai/conversations/'+id,{method:'DELETE'}); if(convId===id){convId=null; newConvo();} loadConvos(); toast('Conversation deleted'); }
+  catch(e){ toast(e.message,'err'); }
+}
+
+function newConvo(){
+  convId=null;
+  document.querySelectorAll('.convo-item').forEach(i=>i.classList.remove('on'));
+  document.getElementById('chat-msgs').innerHTML=`
+    <div class="msg"><div class="msg-av ai">F</div>
+    <div class="msg-bbl">New conversation. What financial topic would you like to explore? I'll pull your latest MongoDB data to give you specific advice.</div></div>`;
+  document.getElementById('chat-intent').style.display='none';
+}
+
+function appendMsg(role, content){
+  const msgs=document.getElementById('chat-msgs');
+  const d=document.createElement('div');
+  d.className='msg'+(role==='user'?' user':'');
+  const ini=role==='user'?(ME?.name||'U')[0].toUpperCase():'F';
+  // Convert **bold** markdown to <strong>
+  const html=content
+    .replace(/</g,'&lt;')
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n/g,'<br>');
+  d.innerHTML=`<div class="msg-av ${role==='user'?'usr':'ai'}">${ini}</div><div class="msg-bbl">${html}</div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function ask(q){ document.getElementById('chat-inp').value=q; sendMsg(); }
+
+async function sendMsg(){
+  const inp=document.getElementById('chat-inp');
+  const msg=inp.value.trim();
+  if(!msg) return;
+  inp.value='';
+  appendMsg('user',msg);
+
+  // Typing indicator
+  const msgs=document.getElementById('chat-msgs');
+  const typing=document.createElement('div');
+  typing.id='typing'; typing.className='msg';
+  typing.innerHTML=`<div class="msg-av ai">F</div><div class="msg-bbl" style="color:var(--t-soft)"><span class="spin"></span>Analysing your financial data…</div>`;
+  msgs.appendChild(typing); msgs.scrollTop=msgs.scrollHeight;
+
+  const btn=document.getElementById('btn-send');
+  btn.disabled=true;
+
+  try {
+    const {data}=await req('/ai/chat',{method:'POST',body:JSON.stringify({message:msg,conversationId:convId})});
+    convId=data.conversationId;
+    typing.remove();
+    appendMsg('assistant',data.reply);
+    // Show detected topic
+    if(data.intent && data.intent!=='general' && data.intent!=='greeting'){
+      const ti=document.getElementById('chat-intent');
+      ti.textContent=data.intent.replace(/_/g,' ');
+      ti.style.display='block';
+    }
+    loadConvos();
+  } catch(e){
+    typing.remove();
+    appendMsg('assistant','⚠️ '+e.message+'\n\nMake sure your ANTHROPIC_API_KEY is set in backend/.env and the server is running.');
+    toast(e.message,'err');
+  } finally{ btn.disabled=false; }
+}
+
+// ── cash flow forecast ─────────────────────────────────────────
+async function loadForecast(btn){
+  btn.disabled=true; btn.textContent='Generating…';
+  const el=document.getElementById('forecast-content');
+  el.innerHTML='<div class="empty-state"><span class="spin"></span>AI is generating your cash flow forecast…</div>';
+  try {
+    const {data}=await req('/ai/forecast');
+    if(!data){ el.innerHTML='<div class="empty-state">Add more transactions (at least 5) to generate a forecast.</div>'; return; }
+    const n30=data.next30days, n90=data.next90days;
+    el.innerHTML=`
+      <div class="forecast-grid">
+        <div class="fc-box">
+          <div class="fc-period">Next 30 Days</div>
+          <div class="fc-num ${n30.netCashFlow>=0?'pos':'neg'}">${fmt(n30.netCashFlow)}</div>
+          <div style="font-size:13px;color:var(--t-soft);margin-bottom:.75rem">Income ${fmt(n30.expectedIncome)} · Expenses ${fmt(n30.expectedExpenses)}</div>
+          <span class="fc-conf ${n30.confidence}">${n30.confidence} confidence</span>
+        </div>
+        <div class="fc-box">
+          <div class="fc-period">Next 90 Days</div>
+          <div class="fc-num ${n90.netCashFlow>=0?'pos':'neg'}">${fmt(n90.netCashFlow)}</div>
+          <div style="font-size:13px;color:var(--t-soft);margin-bottom:.75rem">Income ${fmt(n90.expectedIncome)} · Expenses ${fmt(n90.expectedExpenses)}</div>
+          <span class="fc-conf ${n90.confidence}">${n90.confidence} confidence</span>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:1rem">
+        <div class="card-t">AI Summary</div>
+        <p style="font-size:14px;color:var(--t-mid);line-height:1.7">${data.summary||'—'}</p>
+      </div>
+      ${data.risks?.length?`<div class="card" style="margin-bottom:1rem"><div class="card-t">Key Risks</div><ul style="padding-left:1.2rem;font-size:14px;color:var(--t-mid);line-height:2">${data.risks.map(r=>`<li>${r}</li>`).join('')}</ul></div>`:''}
+      ${data.recommendations?.length?`<div class="card"><div class="card-t">Recommendations</div><ol style="padding-left:1.2rem;font-size:14px;color:var(--t-mid);line-height:2">${data.recommendations.map(r=>`<li>${r}</li>`).join('')}</ol></div>`:''}`;
+    toast('Forecast generated ✓','ok');
+  } catch(e){
+    el.innerHTML=`<div class="empty-state">${e.message}</div>`;
+    toast(e.message,'err');
+  } finally{ btn.disabled=false; btn.textContent='🔮 Generate forecast'; }
+}
+
+// ── modal backdrop ─────────────────────────────────────────────
+document.getElementById('tx-overlay').addEventListener('click',function(e){ if(e.target===this)closeModal(); });
+
+// ── CSV Import ─────────────────────────────────────────────────
+async function importCSV(){
+  const input=document.createElement('input');
+  input.type='file';
+  input.accept='.csv';
+  input.onchange=async(e)=>{
+    const file=e.target.files[0];
+    if(!file)return;
+    
+    const formData=new FormData();
+    formData.append('file',file);
+    
+    toast('Importing CSV...','ok');
+    try{
+      const res=await fetch(`${API}/transactions/import-csv`,{
+        method:'POST',
+        headers:{'Authorization':`Bearer ${token}`},
+        body:formData
+      });
+      const json=await res.json();
+      if(!res.ok)throw new Error(json.message||'Import failed');
+      
+      toast(`✓ Imported ${json.data.summary.successful} transactions. ${json.data.summary.failed} failed.`,'ok');
+      loadTx();
+    }catch(e){
+      toast(e.message,'err');
+    }
+  };
+  input.click();
+}
+
+// ── PWA Service Worker Registration ────────────────────────────
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg=>{
+        console.log('✓ Service Worker registered',reg.scope);
+        
+        // Check for updates
+        reg.addEventListener('updatefound',()=>{
+          const newWorker=reg.installing;
+          newWorker.addEventListener('statechange',()=>{
+            if(newWorker.state==='installed'&&navigator.serviceWorker.controller){
+              // New version available
+              if(confirm('New version available! Reload to update?')){
+                newWorker.postMessage({type:'SKIP_WAITING'});
+                window.location.reload();
+              }
+            }
+          });
+        });
+      })
+      .catch(err=>console.error('Service Worker registration failed:',err));
+  });
+  
+  // Handle service worker updates
+  let refreshing=false;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    if(refreshing)return;
+    refreshing=true;
+    window.location.reload();
+  });
+}
+
+// ── PWA Install Prompt ──────────────────────────────────────────
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt',(e)=>{
+  e.preventDefault();
+  deferredPrompt=e;
+  
+  // Show install button (you can add this to your UI)
+  console.log('💡 PWA install available');
+});
+
+async function installPWA(){
+  if(!deferredPrompt)return;
+  deferredPrompt.prompt();
+  const{outcome}=await deferredPrompt.userChoice;
+  console.log(`User ${outcome} the install prompt`);
+  deferredPrompt=null;
+}
+
+// ── auto-login on page load ────────────────────────────────────
+(async()=>{
+  if(!token) return;
+  try { const{data}=await req('/auth/me'); ME=data; enterApp(); }
+  catch(e){ localStorage.removeItem('fw_token'); token=null; }
+})();
+</script>
+</body>
+</html>
