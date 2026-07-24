@@ -217,7 +217,7 @@ router.patch('/insights/:id', async (req, res) => {
 router.get('/forecast', async (req, res) => {
   try {
     const count = await Transaction.countDocuments({ user: req.user._id });
-    if (count < 5) return badReq(res, 'Add at least 5 transactions to generate a forecast.');
+    if (count < 3) return badReq(res, 'Add at least 3 transactions to generate a forecast.');
     const forecast = await aiService.forecastCashFlow(req.user, Transaction);
     if (!forecast) return ok(res, null, { message: 'Not enough historical data for a reliable forecast yet.' });
     return ok(res, forecast);
