@@ -13,6 +13,7 @@ const transactionSchema = new mongoose.Schema({
     required: true
   },
   amount: {
+    min: [1, 'Minimum transaction amount is ₹1'],
     type: Number,
     required: [true, 'Amount is required'],
     min: [0, 'Amount must be positive']

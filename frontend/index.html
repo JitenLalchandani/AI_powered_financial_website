@@ -1289,7 +1289,7 @@ async function saveTx(){
   const cat=document.getElementById('m-cat').value;
   const desc=document.getElementById('m-desc').value.trim();
   const date=document.getElementById('m-date').value;
-  if(!amt||amt<=0) return toast('Enter a valid amount','err');
+  if(!amt||amt<1) return toast('Minimum transaction amount is ₹1','err');
   if(!date)        return toast('Select a date','err');
   const btn=document.getElementById('btn-save');
   btn.disabled=true; btn.textContent='Saving…';
