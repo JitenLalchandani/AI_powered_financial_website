@@ -1,19 +1,36 @@
 /**
- * Auth Routes
- * POST /api/auth/register  — create account
- * POST /api/auth/login     — get token
- * GET  /api/auth/me        — fetch profile
- * PATCH /api/auth/profile  — update profile
+ * Auth Routes with Advanced Security
+ * POST /api/auth/register  - create account
+ * POST /api/auth/login     - get token
+ * GET  /api/auth/me        - fetch profile
+ * PATCH /api/auth/profile  - update profile
  * POST /api/auth/change-password
  */
-const express = require('express');
-const router  = express.Router();
-const jwt     = require('jsonwebtoken');
-const User    = require('../models/User');
-const { protect }          = require('../middleware/auth');
-const { check, authRules } = require('../utils/validate');
+
+const express  = require('express');
+const router   = express.Router();
+const jwt      = require('jsonwebtoken');
+const User     = require('../models/User');
+const { protect }            = require('../middleware/auth');
+const { check, authRules }   = require('../utils/validate');
 const { ok, created, badReq, unauth, serverErr } = require('../utils/response');
-const { sendWelcomeEmail } = require('../services/emailService');
+const { sendWelcomeEmail }   = require('../services/emailService');
+
+// — Constants
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOCK_TIME = 30 * 60 * 1000; // 30 minutes
+
+// — Password strength checker
+const isStrongPassword = (password) => {
+  const minLength = password.length >= 8;
+  const hasUpper = /[A-Z]/.test(password);
+  const hasLower = /[a-z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  return { minLength, hasUpper, hasLower, hasNumber, hasSpecial,
+    isValid: minLength && hasUpper && hasLower && hasNumber && hasSpecial
+  };
+};
 
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -21,51 +38,88 @@ const signToken = (id) =>
   });
 
 const userPayload = (u) => ({
-  id:       u._id,
-  name:     u.name,
-  email:    u.email,
-  userType: u.userType,
-  plan:     u.plan,
-  profile:  u.profile,
-  onboarded: u.onboarded,
-  createdAt: u.createdAt
+  id:         u._id,
+  name:       u.name,
+  email:      u.email,
+  userType:   u.userType,
+  plan:       u.plan,
+  profile:    u.profile,
+  onboarded:  u.onboarded,
+  createdAt:  u.createdAt
 });
 
-// ── Register ─────────────────────────────────────────────────────────────────
-router.post('/register', authRules.register, async (req, res) => {
-  if (!check(req, res)) return;
+// — Register
+router.post('/register', async (req, res) => {
   try {
     const { name, email, password, userType } = req.body;
 
-    if (await User.findOne({ email })) {
-      return badReq(res, 'An account with this email already exists. Please log in.');
+    // Basic validation
+    if (!name || !email || !password || !userType)
+      return badReq(res, 'All fields are required.');
+
+    // Password strength validation
+    const strength = isStrongPassword(password);
+    if (!strength.isValid) {
+      const issues = [];
+      if (!strength.minLength) issues.push('at least 8 characters');
+      if (!strength.hasUpper)  issues.push('one uppercase letter');
+      if (!strength.hasLower)  issues.push('one lowercase letter');
+      if (!strength.hasNumber) issues.push('one number');
+      if (!strength.hasSpecial) issues.push('one special character (!@#$%^&*)');
+      return badReq(res, `Password must have: ${issues.join(', ')}.`);
     }
 
-    const user  = await User.create({ name, email, password, userType });
+    // Check if email exists
+    const existing = await User.findOne({ email: email.toLowerCase() });
+    if (existing) return badReq(res, 'Email already registered.');
+
+    const user = await User.create({ name, email, password, userType });
+    try { await sendWelcomeEmail(user); } catch(e) {}
+
     const token = signToken(user._id);
-
-    // Send welcome email (async, don't wait for it)
-    sendWelcomeEmail(user).catch(err => {
-      console.error('Failed to send welcome email:', err);
-    });
-
-    return created(res, userPayload(user), 'Account created successfully', { token });
+    return created(res, userPayload(user), { token, message: 'Account created successfully' });
   } catch (err) {
     return serverErr(res, err, 'register');
   }
 });
 
-// ── Login ────────────────────────────────────────────────────────────────────
-router.post('/login', authRules.login, async (req, res) => {
-  if (!check(req, res)) return;
+// — Login with account lockout
+router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email }).select('+password');
+    if (!email || !password)
+      return badReq(res, 'Email and password are required.');
 
-    if (!user || !(await user.comparePassword(password))) {
-      return unauth(res, 'Incorrect email or password. Please try again.');
+    const user = await User.findOne({ email: email.toLowerCase() }).select('+password +loginAttempts +lockUntil');
+    if (!user) return unauth(res, 'Invalid email or password.');
+
+    // Check if account is locked
+    if (user.lockUntil && user.lockUntil > Date.now()) {
+      const minutesLeft = Math.ceil((user.lockUntil - Date.now()) / 60000);
+      return unauth(res, `Account locked. Try again in ${minutesLeft} minute(s).`);
     }
 
+    // Check password
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      // Increment failed attempts
+      user.loginAttempts = (user.loginAttempts || 0) + 1;
+
+      if (user.loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+        user.lockUntil = new Date(Date.now() + LOCK_TIME);
+        user.loginAttempts = 0;
+        await user.save({ validateBeforeSave: false });
+        return unauth(res, 'Too many failed attempts. Account locked for 30 minutes.');
+      }
+
+      const attemptsLeft = MAX_LOGIN_ATTEMPTS - user.loginAttempts;
+      await user.save({ validateBeforeSave: false });
+      return unauth(res, `Invalid email or password. ${attemptsLeft} attempt(s) remaining.`);
+    }
+
+    // Successful login - reset attempts
+    user.loginAttempts = 0;
+    user.lockUntil = undefined;
     user.lastLogin = new Date();
     await user.save({ validateBeforeSave: false });
 
@@ -76,10 +130,10 @@ router.post('/login', authRules.login, async (req, res) => {
   }
 });
 
-// ── Get current user ─────────────────────────────────────────────────────────
+// — Get current user
 router.get('/me', protect, (req, res) => ok(res, userPayload(req.user)));
 
-// ── Update profile ────────────────────────────────────────────────────────────
+// — Update profile
 router.patch('/profile', protect, async (req, res) => {
   try {
     const allowed = ['name', 'profile', 'onboarded'];
@@ -95,14 +149,24 @@ router.patch('/profile', protect, async (req, res) => {
   }
 });
 
-// ── Change password ───────────────────────────────────────────────────────────
+// — Change password
 router.post('/change-password', protect, async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
     if (!currentPassword || !newPassword)
       return badReq(res, 'Both current and new password are required.');
-    if (newPassword.length < 6)
-      return badReq(res, 'New password must be at least 6 characters.');
+
+    // Password strength check
+    const strength = isStrongPassword(newPassword);
+    if (!strength.isValid) {
+      const issues = [];
+      if (!strength.minLength)  issues.push('at least 8 characters');
+      if (!strength.hasUpper)   issues.push('one uppercase letter');
+      if (!strength.hasLower)   issues.push('one lowercase letter');
+      if (!strength.hasNumber)  issues.push('one number');
+      if (!strength.hasSpecial) issues.push('one special character (!@#$%^&*)');
+      return badReq(res, `New password must have: ${issues.join(', ')}.`);
+    }
 
     const user = await User.findById(req.user._id).select('+password');
     if (!(await user.comparePassword(currentPassword)))

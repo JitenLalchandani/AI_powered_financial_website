@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Password is required'],
-    minlength: [6, 'Password must be at least 6 characters'],
+    minlength: [8, 'Password must be at least 8 characters'],
     select: false
   },
   userType: {
@@ -45,6 +45,8 @@ const userSchema = new mongoose.Schema({
   onboarded: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
   lastLogin: Date,
+  loginAttempts: { type: Number, default: 0 },
+  lockUntil: { type: Date },
 });
 
 // Hash password before save
