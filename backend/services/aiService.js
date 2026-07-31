@@ -82,7 +82,7 @@ async function callAI(messages, systemPrompt, maxTokens = MAX_TOKENS, requiresJS
   if (gemini) {
     try {
       const model = gemini.getGenerativeModel({ model: 'gemini-2.0-flash' });
-      const fullPrompt = `${systemPrompt}\n\nUser: ${userMessage}\n\nAssistant:`;
+      const fullPrompt = systemPrompt + "\n\nUser: " + userMessage + "\n\nAssistant:";
       const result = await model.generateContent({
         contents: [{ role: 'user', parts: [{ text: fullPrompt }] }],
         generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 }
@@ -110,7 +110,7 @@ async function callAI(messages, systemPrompt, maxTokens = MAX_TOKENS, requiresJS
     return "Unable to generate custom response at this moment.";
   }
 
-  throw new Error(`All AI providers failed:\n${errors.join('\n')}`);
+  throw new Error("All AI providers failed:\n" + errors.join('\n'));
 }
 
 function detectIntent(message) {
@@ -126,9 +126,9 @@ async function buildFinancialContext(Transaction, userId) {
     const totalCount = await Transaction.countDocuments({ user: userId });
     const recentTx = await Transaction.find({ user: userId }).sort({ date: -1 }).limit(10).lean();
     
-    let ctx = `Total transactions: ${totalCount}\n`;
+    let ctx = "Total transactions: " + totalCount + "\n";
     recentTx.forEach(t => {
-      ctx += `${t.date?.toISOString().split('T')[0]} | ${t.type} | ₹${t.amount} | ${t.category}\n`;
+      ctx += (t.date ? t.date.toISOString().split('T')[0] : '') + " | " + t.type + " | ₹" + t.amount + " | " + t.category + "\n";
     });
     return ctx;
   } catch (e) {
@@ -137,7 +137,7 @@ async function buildFinancialContext(Transaction, userId) {
 }
 
 function buildSystemPrompt(user, financialContext, intent) {
-  return `You are FinWise AI advisor for ${user?.name || 'User'}.\nContext:\n${financialContext}`;
+  return "You are FinWise AI advisor for " + (user?.name || 'User') + ".\nContext:\n" + financialContext;
 }
 
 async function generateInsights(user, Transaction) {
@@ -153,25 +153,7 @@ async function forecastCashFlow(user, Transaction) {
     recentTxCount = await Transaction.countDocuments({ user: user._id });
   }
 
-  const systemPrompt = `You are a financial advisor. Return ONLY a valid JSON object matching this structure (no markdown, no backticks, no extra text):
-{
-  "n30": {
-    "expectedIncome": 0,
-    "expectedExpenses": 0,
-    "netCashFlow": 0,
-    "confidence": "medium"
-  },
-  "n90": {
-    "expectedIncome": 0,
-    "expectedExpenses": 0,
-    "netCashFlow": 0,
-    "confidence": "medium"
-  },
-  "summary": "Short cash flow summary paragraph based on financial trends."
-}
-
-Financial Context:
-${finContext}`;
+  const systemPrompt = "You are a financial advisor. Return ONLY a valid JSON object matching this structure (no markdown, no backticks, no extra text):\n{\n  \"n30\": {\n    \"expectedIncome\": 0,\n    \"expectedExpenses\": 0,\n    \"netCashFlow\": 0,\n    \"confidence\": \"medium\"\n  },\n  \"n90\": {\n    \"expectedIncome\": 0,\n    \"expectedExpenses\": 0,\n    \"netCashFlow\": 0,\n    \"confidence\": \"medium\"\n  },\n  \"summary\": \"Short cash flow summary paragraph based on financial trends.\"\n}\n\nFinancial Context:\n" + finContext;
 
   const userPrompt = "Generate 30-day (n30) and 90-day (n90) cash flow forecasts based on the user's financial history.";
 
