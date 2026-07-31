@@ -564,19 +564,59 @@ async function generateInsights(user, Transaction) {
 }
 
 async function forecastCashFlow(user, Transaction) {
-  let finContext = "No transaction model provided.";
+  let finContext = "No transaction data available.";
+  let recentTxCount = 0;
+
   if (Transaction && user?._id) {
     finContext = await buildFinancialContext(Transaction, user._id);
+    recentTxCount = await Transaction.countDocuments({ user: user._id });
   }
-  
-  const systemPrompt = `You are a financial advisor. Return ONLY a valid JSON object (no raw text, no markdown backticks \`\`\`json) formatted precisely like this:
+
+  const systemPrompt = `You are a financial advisor. Return ONLY a valid JSON object matching this structure (no markdown, no text outside JSON):
 {
   "n30": {
     "expectedIncome": 0,
     "expectedExpenses": 0,
     "netCashFlow": 0,
-    "runwayDays": 30,
-    "summary": "Short explanation of cash flow for the next 30 days."
+    "confidence": "medium"
+  },
+  "n90": {
+    "expectedIncome": 0,
+    "expectedExpenses": 0,
+    "netCashFlow": 0,
+    "confidence": "medium"
+  },
+  "summary": "Clear, short AI forecast explanation for the user."
+}
+
+Financial Context:
+${finContext}`;
+
+  const userPrompt = "Generate 30-day (n30) and 90-day (n90) cash flow forecasts based on the user's financial history.";
+
+  try {
+    const rawResponse = await callAI(userPrompt, systemPrompt, MAX_TOKENS, true);
+    const cleanJson = rawResponse.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(cleanJson);
+
+    // Standardize structure
+    return {
+      n30: parsed.n30 || { expectedIncome: 0, expectedExpenses: 0, netCashFlow: 0, confidence: "low" },
+      n90: parsed.n90 || { expectedIncome: 0, expectedExpenses: 0, netCashFlow: 0, confidence: "low" },
+      summary: parsed.summary || "Forecast generated based on recent financial activity."
+    };
+  } catch (err) {
+    console.error('forecastCashFlow AI generation error:', err.message);
+
+    // Intelligent fallback if AI fails or user is new
+    const confidenceLevel = recentTxCount > 5 ? "medium" : "low";
+    return {
+      n30: { expectedIncome: 0, expectedExpenses: 0, netCashFlow: 0, confidence: confidenceLevel },
+      n90: { expectedIncome: 0, expectedExpenses: 0, netCashFlow: 0, confidence: confidenceLevel },
+      summary: recentTxCount === 0 
+        ? "No transaction history found. Add transactions in the dashboard to generate an accurate forecast." 
+        : "AI model was busy. Please try generating again in a few seconds."
+    };
   }
 }
 
