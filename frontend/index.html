@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<script>
+  window.addEventListener("error", function(e) {
+    console.error("Global JS Error:", e);
+    const loader = document.getElementById("loading") || document.querySelector(".loading") || document.querySelector("[id*="load"]");
+    if (loader) loader.style.display = "none";
+    alert("App render error: " + (e.message || "Unknown error") + " at " + (e.filename || "") + ":" + e.lineno);
+  });
+</script>
+
 <meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><style>*{box-sizing:border-box!important;}body,html{overflow-x:hidden!important;max-width:100vw!important;}img,video,table{max-width:100%!important;}</style>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -657,6 +667,13 @@ footer{background:#060F1A;color:rgba(255,255,255,.4);padding:2.5rem 1.5rem;text-
   }
 </style>
 
+
+  <style>
+    /* Force visibility on auth success */
+    .auth-active #auth-screen, .auth-active #login-screen { display: none !important; }
+    .auth-active #main-app, .auth-active #dashboard, .auth-active main { display: block !important; visibility: visible !important; opacity: 1 !important; }
+  </style>
+  
 </head>
 <body>
 
