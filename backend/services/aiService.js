@@ -1,7 +1,7 @@
 /**
  * FinWise AI Service — Multi-Provider with Fallback
- * Supports: OpenAI GPT-4, Google Gemini, Anthropic Claude
- * Priority: OpenAI → Gemini → Claude
+ * Supports: OpenRouter (free), OpenAI GPT-4, Google Gemini, Anthropic Claude
+ * Priority: OpenRouter → Gemini → OpenAI → Claude
  */
 
 const https = require('https');
@@ -21,6 +21,56 @@ if (process.env.OPENAI_API_KEY && !process.env.OPENAI_API_KEY.includes('REPLACE'
 
 if (process.env.GEMINI_API_KEY && !process.env.GEMINI_API_KEY.includes('REPLACE')) {
   gemini = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  OpenRouter API (FREE models available)
+// ─────────────────────────────────────────────────────────────────────────────
+function callOpenRouter(userMessage, systemPrompt, maxTokens = MAX_TOKENS) {
+  return new Promise((resolve, reject) => {
+    const apiKey = process.env.OPENROUTER_API_KEY;
+    if (!apiKey) return reject(new Error('OPENROUTER_API_KEY not set'));
+
+    const body = JSON.stringify({
+      model: process.env.OPENROUTER_MODEL || 'mistralai/mistral-7b-instruct:free',
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userMessage }
+      ],
+      max_tokens: maxTokens,
+      temperature: 0.7
+    });
+
+    const req = https.request({
+      hostname: 'openrouter.ai',
+      path: '/api/v1/chat/completions',
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://ai-powered-financial-website.onrender.com',
+        'X-Title': 'FinWise AI',
+        'Content-Length': Buffer.byteLength(body)
+      }
+    }, (res) => {
+      let raw = '';
+      res.on('data', c => (raw += c));
+      res.on('end', () => {
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed.error) return reject(new Error(`OpenRouter: ${parsed.error.message || JSON.stringify(parsed.error)}`));
+          const text = parsed.choices?.[0]?.message?.content;
+          if (text) return resolve(text);
+          reject(new Error('Empty OpenRouter response'));
+        } catch (e) {
+          reject(new Error('Could not parse OpenRouter response: ' + e.message));
+        }
+      });
+    });
+    req.on('error', reject);
+    req.write(body);
+    req.end();
+  });
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -58,7 +108,21 @@ async function callAI(messages, systemPrompt, maxTokens = MAX_TOKENS, requiresJS
     }
   }
 
-  // Try Claude first (best for structured JSON)
+  // Try OpenRouter first (FREE models available)
+  if (process.env.OPENROUTER_API_KEY) {
+    try {
+      console.log('[AI] Trying OpenRouter...');
+      const userMessage = messages[messages.length - 1].content;
+      const result = await callOpenRouter(userMessage, systemPrompt, maxTokens);
+      console.log('[AI] ✓ OpenRouter succeeded');
+      return result;
+    } catch (e) {
+      errors.push(`OpenRouter: ${e.message}`);
+      console.log('[AI] ✗ OpenRouter failed:', e.message);
+    }
+  }
+
+  // Try Claude (best for structured JSON)
   const anthropicKey = process.env.ANTHROPIC_API_KEY || '';
   if (anthropicKey && !anthropicKey.includes('REPLACE')) {
     try {
