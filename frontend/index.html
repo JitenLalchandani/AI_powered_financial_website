@@ -1450,18 +1450,18 @@ async function loadForecast(btn){
   try {
     const {data}=await req('/ai/forecast');
     // backend now throws proper errors if data is null
-    const n30=data.next30days, n90=data.next90days;
+    const forecastRes = data.data || data; const n30 = forecastRes.n30 || {}; const n90 = forecastRes.n90 || {};
     el.innerHTML=`
       <div class="forecast-grid">
         <div class="fc-box">
           <div class="fc-period">Next 30 Days</div>
-          <div class="fc-num ${(n30?.netCashFlow || 0)>=0?'pos':'neg'}">${fmt((n30?.netCashFlow || 0))}</div>
+          <div class="fc-num ${(n30?.netCashFlow || 0)>=0?'pos':'neg'}">${fmt(n30.netCashFlow || 0)}</div>
           <div style="font-size:13px;color:var(--t-soft);margin-bottom:.75rem">Income ${fmt((n30?.expectedIncome || 0))} · Expenses ${fmt((n30?.expectedExpenses || 0))}</div>
           <span class="fc-conf ${(n30?.confidence || "low")}">${(n30?.confidence || "low")} confidence</span>
         </div>
         <div class="fc-box">
           <div class="fc-period">Next 90 Days</div>
-          <div class="fc-num ${(n90?.netCashFlow || 0)>=0?'pos':'neg'}">${fmt((n90?.netCashFlow || 0))}</div>
+          <div class="fc-num ${(n90?.netCashFlow || 0)>=0?'pos':'neg'}">${fmt(n90.netCashFlow || 0)}</div>
           <div style="font-size:13px;color:var(--t-soft);margin-bottom:.75rem">Income ${fmt((n90?.expectedIncome || 0))} · Expenses ${fmt((n90?.expectedExpenses || 0))}</div>
           <span class="fc-conf ${(n90?.confidence || "low")}">${(n90?.confidence || "low")} confidence</span>
         </div>
