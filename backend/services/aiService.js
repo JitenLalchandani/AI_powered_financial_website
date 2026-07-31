@@ -569,13 +569,44 @@ async function forecastCashFlow(user, Transaction) {
     finContext = await buildFinancialContext(Transaction, user._id);
   }
   
-  const prompt = "Analyze recent transactions and forecast cash flow for the next 30 days.";
-  const systemPrompt = `You are a financial advisor. Provide a short, structured cash flow forecast with expected income, expenses, and net balance.\n\n${finContext}`;
-  return await callAI(prompt, systemPrompt);
+  const systemPrompt = `You are a financial advisor. Return ONLY a valid JSON object (no raw text, no markdown backticks \`\`\`json) formatted precisely like this:
+{
+  "n30": {
+    "expectedIncome": 0,
+    "expectedExpenses": 0,
+    "netCashFlow": 0,
+    "runwayDays": 30,
+    "summary": "Short explanation of cash flow for the next 30 days."
+  }
+}
+
+Context:
+${finContext}`;
+
+  const userPrompt = "Analyze recent transactions and forecast cash flow for the next 30 days.";
+
+  try {
+    const rawResponse = await callAI(userPrompt, systemPrompt, MAX_TOKENS, true);
+    // Remove potential markdown block delimiters
+    const cleanJson = rawResponse.replace(/```json|```/g, '').trim();
+    return JSON.parse(cleanJson);
+  } catch (err) {
+    console.error('forecastCashFlow error:', err.message);
+    // Fallback object ensuring the frontend won't encounter undefined errors
+    return {
+      n30: {
+        expectedIncome: 0,
+        expectedExpenses: 0,
+        netCashFlow: 0,
+        runwayDays: 0,
+        summary: "Could not structure AI forecast data. Please try again."
+      }
+    };
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-//  SINGLE EXPORT BLOCK AT THE VERY BOTTOM
+//  SINGLE EXPORT BLOCK
 // ─────────────────────────────────────────────────────────────────────────────
 module.exports = {
   callAI,
