@@ -674,6 +674,22 @@ footer{background:#060F1A;color:rgba(255,255,255,.4);padding:2.5rem 1.5rem;text-
     .auth-active #main-app, .auth-active #dashboard, .auth-active main { display: block !important; visibility: visible !important; opacity: 1 !important; }
   </style>
   
+
+<script>
+  // Show helpful UI status during Render free-tier cold starts
+  let wakeupTimer;
+  window.addEventListener("fetch-start", () => {
+    wakeupTimer = setTimeout(() => {
+      const statusEl = document.getElementById("status-msg") || document.querySelector(".loading-text");
+      if (statusEl) {
+        statusEl.innerText = "Connecting to server... Wake-up takes ~30-40 seconds on free tier 🚀";
+        statusEl.style.color = "#eab308";
+      }
+    }, 3000);
+  });
+  window.addEventListener("fetch-end", () => clearTimeout(wakeupTimer));
+</script>
+
 </head>
 <body>
 
