@@ -246,6 +246,22 @@ async function generateInsights(user, Transaction) {
     }
   };
 }
+// ... [generateInsights function ends here] ...
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  7. Cash Flow Forecast
+// ─────────────────────────────────────────────────────────────────────────────
+async function forecastCashFlow(user, Transaction) {
+  const prompt = "Analyze recent transactions and forecast cash flow for the next 30 days.";
+  const systemPrompt = "You are a financial analyst. Provide a short, structured cash flow forecast with expected income, expenses, and net balance.";
+  return await callAI(prompt, systemPrompt);
+}
+
+module.exports = {
+  callAI,
+  generateInsights,
+  forecastCashFlow
+};
 
 module.exports = {
   callAI,
