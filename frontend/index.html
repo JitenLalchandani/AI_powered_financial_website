@@ -1455,15 +1455,15 @@ async function loadForecast(btn){
       <div class="forecast-grid">
         <div class="fc-box">
           <div class="fc-period">Next 30 Days</div>
-          <div class="fc-num ${n30.netCashFlow>=0?'pos':'neg'}">${fmt(n30.netCashFlow)}</div>
-          <div style="font-size:13px;color:var(--t-soft);margin-bottom:.75rem">Income ${fmt(n30.expectedIncome)} · Expenses ${fmt(n30.expectedExpenses)}</div>
-          <span class="fc-conf ${n30.confidence}">${n30.confidence} confidence</span>
+          <div class="fc-num ${(n30?.netCashFlow || 0)>=0?'pos':'neg'}">${fmt((n30?.netCashFlow || 0))}</div>
+          <div style="font-size:13px;color:var(--t-soft);margin-bottom:.75rem">Income ${fmt((n30?.expectedIncome || 0))} · Expenses ${fmt((n30?.expectedExpenses || 0))}</div>
+          <span class="fc-conf ${(n30?.confidence || "low")}">${(n30?.confidence || "low")} confidence</span>
         </div>
         <div class="fc-box">
           <div class="fc-period">Next 90 Days</div>
-          <div class="fc-num ${n90.netCashFlow>=0?'pos':'neg'}">${fmt(n90.netCashFlow)}</div>
-          <div style="font-size:13px;color:var(--t-soft);margin-bottom:.75rem">Income ${fmt(n90.expectedIncome)} · Expenses ${fmt(n90.expectedExpenses)}</div>
-          <span class="fc-conf ${n90.confidence}">${n90.confidence} confidence</span>
+          <div class="fc-num ${(n90?.netCashFlow || 0)>=0?'pos':'neg'}">${fmt((n90?.netCashFlow || 0))}</div>
+          <div style="font-size:13px;color:var(--t-soft);margin-bottom:.75rem">Income ${fmt((n90?.expectedIncome || 0))} · Expenses ${fmt((n90?.expectedExpenses || 0))}</div>
+          <span class="fc-conf ${(n90?.confidence || "low")}">${(n90?.confidence || "low")} confidence</span>
         </div>
       </div>
       <div class="card" style="margin-bottom:1rem">
