@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<script>
-  window.addEventListener("error", function(e) {
-    console.error("Global JS Error:", e);
-    const loader = document.getElementById("loading") || document.querySelector(".loading") || document.querySelector("[id*="load"]");
-    if (loader) loader.style.display = "none";
-    alert("App render error: " + (e.message || "Unknown error") + " at " + (e.filename || "") + ":" + e.lineno);
-  });
-</script>
-
 <meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><style>*{box-sizing:border-box!important;}body,html{overflow-x:hidden!important;max-width:100vw!important;}img,video,table{max-width:100%!important;}</style>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -351,7 +341,8 @@ footer{background:#060F1A;color:rgba(255,255,255,.4);padding:2.5rem 1.5rem;text-
 .app-main{margin-left:var(--sb);flex:1;min-height:100vh;display:flex;flex-direction:column}
 .app-hdr{background:#fff;border-bottom:1px solid var(--bdr);padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;box-shadow:0 1px 0 var(--bdr)}
 .app-hdr-title{font-size:1rem;font-weight:800;letter-spacing:-.2px}
-.app-hdr-r{display:flex;align-items:center;gap:.875rem}
+.mob-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--t-soft);font-size:22px;line-height:1}
+
 .hdr-badge{background:var(--teal-bg);color:var(--teal2);font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;letter-spacing:.3px}
 .app-body{flex:1;padding:2rem;overflow-y:auto}
 .page{display:none}.page.on{display:block}
@@ -579,8 +570,12 @@ footer{background:#060F1A;color:rgba(255,255,255,.4);padding:2.5rem 1.5rem;text-
   
   /* Mobile navigation */
   .main-nav .nav-links{display:none}
-  .sb{transform:translateX(-100%)}
-  .app-main{margin-left:0}
+  .sb{transform:translateX(-100%);transition:transform .3s ease;position:fixed;z-index:100;height:100vh}
+  .sb.mob-open{transform:translateX(0)}
+  .app-main{margin-left:0 !important}
+  .mob-menu-btn{display:flex !important}
+  .mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99}
+  .mob-overlay.on{display:block}
   
   /* Toast positioning */
   .toast{bottom:1rem;right:1rem;left:1rem;max-width:none}
@@ -619,157 +614,6 @@ footer{background:#060F1A;color:rgba(255,255,255,.4);padding:2.5rem 1.5rem;text-
   }
 }
 </style>
-
-<style>
-  @media (max-width: 768px) {
-    .forecast-grid, [class*="grid-cols"] {
-      display: flex !important;
-      flex-direction: column !important;
-    }
-    body {
-      overflow-x: hidden;
-    }
-  }
-</style>
-
-
-<style>
-  /* Global Mobile Responsive Overrides */
-  * {
-    box-sizing: border-box !important;
-  }
-  html, body {
-    width: 100% !important;
-    max-width: 100vw !important;
-    overflow-x: hidden !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  @media (max-width: 768px) {
-    .container, .wrapper, main, header, nav, section, div {
-      max-width: 100% !important;
-      min-width: 0 !important;
-    }
-    .grid, [class*="grid-"], .forecast-grid {
-      display: flex !important;
-      flex-direction: column !important;
-      width: 100% !important;
-    }
-    table {
-      display: block !important;
-      overflow-x: auto !important;
-      white-space: nowrap !important;
-    }
-    .sidebar {
-      position: static !important;
-      width: 100% !important;
-    }
-  }
-</style>
-
-
-  <style>
-    /* Force visibility on auth success */
-    .auth-active #auth-screen, .auth-active #login-screen { display: none !important; }
-    .auth-active #main-app, .auth-active #dashboard, .auth-active main { display: block !important; visibility: visible !important; opacity: 1 !important; }
-  </style>
-  
-
-<script>
-  // Show helpful UI status during Render free-tier cold starts
-  let wakeupTimer;
-  window.addEventListener("fetch-start", () => {
-    wakeupTimer = setTimeout(() => {
-      const statusEl = document.getElementById("status-msg") || document.querySelector(".loading-text");
-      if (statusEl) {
-        statusEl.innerText = "Connecting to server... Wake-up takes ~30-40 seconds on free tier 🚀";
-        statusEl.style.color = "#eab308";
-      }
-    }, 3000);
-  });
-  window.addEventListener("fetch-end", () => clearTimeout(wakeupTimer));
-</script>
-
-
-<style id="responsive-device-patch">
-  *, *::before, *::after {
-    box-sizing: border-box !important;
-  }
-  html, body {
-    width: 100% !important;
-    max-width: 100vw !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow-x: hidden !important;
-    -webkit-text-size-adjust: 100%;
-  }
-  img, svg, video, canvas {
-    max-width: 100% !important;
-    height: auto !important;
-  }
-  @media (max-width: 768px) {
-    body {
-      font-size: 14px !important;
-    }
-    .container, .main-content, main, .dashboard-container, section {
-      width: 100% !important;
-      max-width: 100% !important;
-      padding-left: 12px !important;
-      padding-right: 12px !important;
-    }
-    .grid, .forecast-grid, [class*="grid-cols"] {
-      display: flex !important;
-      flex-direction: column !important;
-      width: 100% !important;
-      gap: 12px !important;
-    }
-    .sidebar, aside {
-      position: static !important;
-      width: 100% !important;
-      height: auto !important;
-    }
-    table {
-      display: block !important;
-      overflow-x: auto !important;
-      white-space: nowrap !important;
-      width: 100% !important;
-    }
-  }
-</style>
-
-
-<style id="landscape-mobile-patch">
-  /* Fix landscape mode scrolling & element visibility */
-  @media screen and (max-width: 932px) and (orientation: landscape) {
-    html, body {
-      height: auto !important;
-      min-height: 100% !important;
-      overflow-y: auto !important;
-      -webkit-overflow-scrolling: touch;
-    }
-    
-    .sidebar, aside, nav, header, main, .dashboard-container, .grid, section {
-      position: relative !important;
-      height: auto !important;
-      max-height: none !important;
-      overflow: visible !important;
-    }
-
-    /* Stack grid elements vertically in landscape if height is constrained */
-    .grid, .forecast-grid, [class*="grid-cols"] {
-      display: flex !important;
-      flex-direction: column !important;
-      width: 100% !important;
-    }
-
-    /* Reduce padding/margins so content isn't overly spaced out vertically */
-    body, div, section, card {
-      padding-top: 8px !important;
-      padding-bottom: 8px !important;
-    }
-  }
-</style>
-
 </head>
 <body>
 
@@ -1017,7 +861,9 @@ footer{background:#060F1A;color:rgba(255,255,255,.4);padding:2.5rem 1.5rem;text-
   </div>
 
   <div class="app-main">
+    <div class="mob-overlay" id="mob-overlay" onclick="closeMobMenu()"></div>
     <div class="app-hdr">
+      <button class="mob-menu-btn" id="mob-menu-btn" onclick="toggleMobMenu()">☰</button>
       <div class="app-hdr-title" id="page-title">Dashboard</div>
       <div class="app-hdr-r">
         <div class="hdr-badge" id="hdr-type">Business</div>
@@ -1217,6 +1063,15 @@ async function req(path, opts={}) {
 }
 
 // ── views ──────────────────────────────────────────────────────
+function toggleMobMenu(){
+  document.querySelector('.sb').classList.toggle('mob-open');
+  document.getElementById('mob-overlay').classList.toggle('on');
+}
+function closeMobMenu(){
+  document.querySelector('.sb').classList.remove('mob-open');
+  document.getElementById('mob-overlay').classList.remove('on');
+}
+
 function showView(v) {
   document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
   document.getElementById(v+'-view').classList.add('active');
@@ -1323,6 +1178,7 @@ function goPage(name, btn){
   if(btn) btn.classList.add('on');
   const titles={dashboard:'Dashboard',transactions:'Transactions','ai-advisor':'AI Advisor',insights:'Insights',forecast:'Cash Forecast'};
   document.getElementById('page-title').textContent = titles[name]||name;
+  closeMobMenu(); // close sidebar on mobile after navigation
 }
 
 // ── dashboard ──────────────────────────────────────────────────
@@ -1611,20 +1467,20 @@ async function loadForecast(btn){
   try {
     const {data}=await req('/ai/forecast');
     // backend now throws proper errors if data is null
-    const forecastRes = data.data || data; const n30 = forecastRes.n30 || {}; const n90 = forecastRes.n90 || {};
+    const n30=data.next30days, n90=data.next90days;
     el.innerHTML=`
       <div class="forecast-grid">
         <div class="fc-box">
           <div class="fc-period">Next 30 Days</div>
-          <div class="fc-num ${(n30?.netCashFlow || 0)>=0?'pos':'neg'}">${fmt(n30.netCashFlow || 0)}</div>
-          <div style="font-size:13px;color:var(--t-soft);margin-bottom:.75rem">Income ${fmt((n30?.expectedIncome || 0))} · Expenses ${fmt((n30?.expectedExpenses || 0))}</div>
-          <span class="fc-conf ${(n30?.confidence || "low")}">${(n30?.confidence || "low")} confidence</span>
+          <div class="fc-num ${n30.netCashFlow>=0?'pos':'neg'}">${fmt(n30.netCashFlow)}</div>
+          <div style="font-size:13px;color:var(--t-soft);margin-bottom:.75rem">Income ${fmt(n30.expectedIncome)} · Expenses ${fmt(n30.expectedExpenses)}</div>
+          <span class="fc-conf ${n30.confidence}">${n30.confidence} confidence</span>
         </div>
         <div class="fc-box">
           <div class="fc-period">Next 90 Days</div>
-          <div class="fc-num ${(n90?.netCashFlow || 0)>=0?'pos':'neg'}">${fmt(n90.netCashFlow || 0)}</div>
-          <div style="font-size:13px;color:var(--t-soft);margin-bottom:.75rem">Income ${fmt((n90?.expectedIncome || 0))} · Expenses ${fmt((n90?.expectedExpenses || 0))}</div>
-          <span class="fc-conf ${(n90?.confidence || "low")}">${(n90?.confidence || "low")} confidence</span>
+          <div class="fc-num ${n90.netCashFlow>=0?'pos':'neg'}">${fmt(n90.netCashFlow)}</div>
+          <div style="font-size:13px;color:var(--t-soft);margin-bottom:.75rem">Income ${fmt(n90.expectedIncome)} · Expenses ${fmt(n90.expectedExpenses)}</div>
+          <span class="fc-conf ${n90.confidence}">${n90.confidence} confidence</span>
         </div>
       </div>
       <div class="card" style="margin-bottom:1rem">
@@ -1730,53 +1586,5 @@ async function installPWA(){
   }
 })();
 </script>
-
-<script id="server-wakeup-patch">
-  (function PingBackend() {
-    const healthUrl = "/api/health";
-    let attempts = 0;
-    
-    function showWakeupBanner(msg) {
-      let banner = document.getElementById("wakeup-banner");
-      if (!banner) {
-        banner = document.createElement("div");
-        banner.id = "wakeup-banner";
-        banner.style.cssText = "position:fixed;top:0;left:0;right:0;background:#f59e0b;color:#fff;text-align:center;padding:10px;font-size:13px;font-weight:bold;z-index:999999;box-shadow:0 2px 10px rgba(0,0,0,0.2);";
-        document.body.prepend(banner);
-      }
-      banner.innerText = msg;
-    }
-
-    function removeWakeupBanner() {
-      const banner = document.getElementById("wakeup-banner");
-      if (banner) banner.remove();
-    }
-
-    async function checkServer() {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 8000);
-        const res = await fetch(healthUrl, { signal: controller.signal });
-        clearTimeout(timeoutId);
-        
-        if (res.ok) {
-          removeWakeupBanner();
-          console.log("Backend is awake and ready!");
-        } else {
-          throw new Error("Server starting");
-        }
-      } catch (err) {
-        attempts++;
-        if (attempts > 1) {
-          showWakeupBanner("⚡ Server is waking up from idle state... Please wait ~25s (" + (attempts * 5) + "s)");
-        }
-        setTimeout(checkServer, 5000);
-      }
-    }
-    
-    document.addEventListener("DOMContentLoaded", checkServer);
-  })();
-</script>
-
 </body>
 </html>
