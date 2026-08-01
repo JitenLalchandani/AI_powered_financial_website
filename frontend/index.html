@@ -737,6 +737,39 @@ footer{background:#060F1A;color:rgba(255,255,255,.4);padding:2.5rem 1.5rem;text-
   }
 </style>
 
+
+<style id="landscape-mobile-patch">
+  /* Fix landscape mode scrolling & element visibility */
+  @media screen and (max-width: 932px) and (orientation: landscape) {
+    html, body {
+      height: auto !important;
+      min-height: 100% !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .sidebar, aside, nav, header, main, .dashboard-container, .grid, section {
+      position: relative !important;
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+    }
+
+    /* Stack grid elements vertically in landscape if height is constrained */
+    .grid, .forecast-grid, [class*="grid-cols"] {
+      display: flex !important;
+      flex-direction: column !important;
+      width: 100% !important;
+    }
+
+    /* Reduce padding/margins so content isn't overly spaced out vertically */
+    body, div, section, card {
+      padding-top: 8px !important;
+      padding-bottom: 8px !important;
+    }
+  }
+</style>
+
 </head>
 <body>
 
